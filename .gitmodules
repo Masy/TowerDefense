@@ -1,0 +1,3 @@
+[submodule "cedar"]
+	path = cedar
+	url = git@github.com:Masy/cedar.git
