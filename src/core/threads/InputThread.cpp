@@ -98,8 +98,7 @@ void InputThread::onTick(const unsigned long currentTime, const unsigned long ti
 		camera->moveLocal(move.x, move.y, move.z);
 	}
 
-	double scrollY = this->m_window->getScrollOffsetY();
-	camera->setZoomLevel(static_cast<int>(camera->getZoomLevel() - scrollY));
+	camera->zoom(static_cast<float>(this->m_window->getScrollOffsetY()) * -5.0f);
 
 	if (this->m_rightClick->isPressed())
 	{

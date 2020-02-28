@@ -151,10 +151,9 @@ void MasterRenderer::render(unsigned long currentTime, unsigned long currentTick
 	cedar::Vector3f lerpedRotation;
 	camera->getLerpedPosition(currentTime, &lerpedPosition);
 	camera->getLerpedRotation(currentTime, &lerpedRotation);
-	this->m_viewMatrix->translation(0, 0, -(camera->getZoomLevel() * 2.0f));
+	this->m_viewMatrix->translation(0, 0, -(camera->getLerpedZoomLevel(currentTime)));
 	this->m_viewMatrix->rotate(&lerpedRotation);
 	this->m_viewMatrix->translate(-lerpedPosition.x, -lerpedPosition.y, -lerpedPosition.z);
-
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 	glEnable(GL_CULL_FACE);
