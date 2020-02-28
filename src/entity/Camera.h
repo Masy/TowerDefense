@@ -46,7 +46,17 @@ private:
 	/**
 	 * The current zoom level of the camera
 	 */
-	int m_zoomLevel;
+	float m_zoomLevel;
+	/**
+	 * The zoom level of the camera in the next tick.
+	 *
+	 * <p>This is used by the OpenGL thread to interpolate between the zoom levels to give the impression of a smooth zoom.</p>
+	 */
+	float m_newZoomLevel;
+	/**
+	 * The delta that will be applied to the new zoom level in the next tick.
+	 */
+	float m_zoomDelta;
 
 	/**
 	 * The timestamp of when the camera was updated the last time.
@@ -138,11 +148,27 @@ public:
 	 */
 	[[nodiscard]] int getZoomLevel() const;
 	/**
+	 * Gets the linearly interpolated zoom level of the camera.
+	 *
+	 * <p>The interpolation factor is calculated by the difference between the <code>currentTime</code> and
+	 * {@link #m_lastUpdate}.</p>
+	 *
+	 * @param currentTime The current time in microseconds.
+	 * @return the linearly interpolated zoom level.
+	 */
+	[[nodiscard]] float getLerpedZoomLevel(unsigned long currentTime) const;
+	/**
 	 * Sets the zoom level of the camera.
 	 *
 	 * @param newZoomLevel The new zoom level of the camera.
 	 */
-	void setZoomLevel(int newZoomLevel);
+	void setZoomLevel(float newZoomLevel);
+	/**
+	 * Zooms the camera over time by the given amount.
+	 *
+	 * @param deltaZoom The amount that will be zoomed.
+	 */
+	void zoom(float deltaZoom);
 };
 
 #endif //TALESOFCATVENTURE_CAMERA_H
