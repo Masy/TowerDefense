@@ -9,6 +9,7 @@
 #include "cedar/Matrix4f.h"
 #include "cedar/ShaderProgram.h"
 #include "cedar/GuiRenderer.h"
+#include "TerrainRenderer.h"
 
 /**
  * Class representing the master renderer which calls all other renderers.
@@ -37,12 +38,12 @@ private:
 	 */
 	cedar::GuiRenderer *m_guiRenderer;
 
-	unsigned int m_vaoId;
-	unsigned int m_vboId;
-	cedar::ShaderProgram *m_shader;
-	int *m_defaultUniformLocations;
-
 public:
+	/**
+	 * A pointer to the terrain renderer.
+	 */
+	TerrainRenderer *m_terrainRenderer;
+
 	/**
 	 * Constructs a new master renderer.
 	 */

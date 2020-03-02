@@ -50,8 +50,9 @@
 					<Add directory="/media/Daten/Dokumente/Projekte/TalesOfCatventure/src/core/config"/>
 					<Add directory="/media/Daten/Dokumente/Projekte/TalesOfCatventure/src/core/threads"/>
 					<Add directory="/media/Daten/Dokumente/Projekte/TalesOfCatventure/src/core/logging"/>
-					<Add directory="/media/Daten/Dokumente/Projekte/TalesOfCatventure/src/graphics/window"/>
+					<Add directory="/media/Daten/Dokumente/Projekte/TalesOfCatventure/src/graphics/model"/>
 					<Add directory="/media/Daten/Dokumente/Projekte/TalesOfCatventure/src/graphics/renderer"/>
+					<Add directory="/media/Daten/Dokumente/Projekte/TalesOfCatventure/src/world"/>
 					<Add directory="/media/Daten/Dokumente/Projekte/TalesOfCatventure/src/utils"/>
 					<Add directory="/media/Daten/Dokumente/Projekte/TalesOfCatventure/cedar/glad/include"/>
 					<Add directory="/media/Daten/Dokumente/Projekte/TalesOfCatventure/cedar/glfw/include"/>
@@ -76,8 +77,9 @@
 					<Add directory="/media/Daten/Dokumente/Projekte/TalesOfCatventure/src/core/config"/>
 					<Add directory="/media/Daten/Dokumente/Projekte/TalesOfCatventure/src/core/threads"/>
 					<Add directory="/media/Daten/Dokumente/Projekte/TalesOfCatventure/src/core/logging"/>
-					<Add directory="/media/Daten/Dokumente/Projekte/TalesOfCatventure/src/graphics/window"/>
+					<Add directory="/media/Daten/Dokumente/Projekte/TalesOfCatventure/src/graphics/model"/>
 					<Add directory="/media/Daten/Dokumente/Projekte/TalesOfCatventure/src/graphics/renderer"/>
+					<Add directory="/media/Daten/Dokumente/Projekte/TalesOfCatventure/src/world"/>
 					<Add directory="/media/Daten/Dokumente/Projekte/TalesOfCatventure/src/utils"/>
 					<Add directory="/media/Daten/Dokumente/Projekte/TalesOfCatventure/cedar/glad/include"/>
 					<Add directory="/media/Daten/Dokumente/Projekte/TalesOfCatventure/cedar/glfw/include"/>
@@ -305,6 +307,9 @@
 		<Unit filename="/media/Daten/Dokumente/Projekte/TalesOfCatventure/cedar/glfw/src/xkb_unicode.h">
 			<Option target="glfw"/>
 		</Unit>
+		<Unit filename="/media/Daten/Dokumente/Projekte/TalesOfCatventure/cedar/include/cedar/Cedar.h">
+			<Option target="cedar"/>
+		</Unit>
 		<Unit filename="/media/Daten/Dokumente/Projekte/TalesOfCatventure/cedar/include/cedar/GLConstants.h">
 			<Option target="cedar"/>
 		</Unit>
@@ -327,6 +332,15 @@
 			<Option target="cedar"/>
 		</Unit>
 		<Unit filename="/media/Daten/Dokumente/Projekte/TalesOfCatventure/cedar/include/cedar/Matrix4f.h">
+			<Option target="cedar"/>
+		</Unit>
+		<Unit filename="/media/Daten/Dokumente/Projekte/TalesOfCatventure/cedar/include/cedar/Model.h">
+			<Option target="cedar"/>
+		</Unit>
+		<Unit filename="/media/Daten/Dokumente/Projekte/TalesOfCatventure/cedar/include/cedar/ModelRegistry.h">
+			<Option target="cedar"/>
+		</Unit>
+		<Unit filename="/media/Daten/Dokumente/Projekte/TalesOfCatventure/cedar/include/cedar/OpenSimplexNoise.h">
 			<Option target="cedar"/>
 		</Unit>
 		<Unit filename="/media/Daten/Dokumente/Projekte/TalesOfCatventure/cedar/include/cedar/Quaternionf.h">
@@ -389,6 +403,18 @@
 		<Unit filename="/media/Daten/Dokumente/Projekte/TalesOfCatventure/cedar/include/cedar/XException.h">
 			<Option target="cedar"/>
 		</Unit>
+		<Unit filename="/media/Daten/Dokumente/Projekte/TalesOfCatventure/cedar/src/core/Cedar.cpp">
+			<Option target="cedar"/>
+		</Unit>
+		<Unit filename="/media/Daten/Dokumente/Projekte/TalesOfCatventure/cedar/src/core/XException.cpp">
+			<Option target="cedar"/>
+		</Unit>
+		<Unit filename="/media/Daten/Dokumente/Projekte/TalesOfCatventure/cedar/src/graphics/model/Model.cpp">
+			<Option target="cedar"/>
+		</Unit>
+		<Unit filename="/media/Daten/Dokumente/Projekte/TalesOfCatventure/cedar/src/graphics/model/ModelRegistry.cpp">
+			<Option target="cedar"/>
+		</Unit>
 		<Unit filename="/media/Daten/Dokumente/Projekte/TalesOfCatventure/cedar/src/graphics/renderer/GuiRenderer.cpp">
 			<Option target="cedar"/>
 		</Unit>
@@ -419,6 +445,9 @@
 		<Unit filename="/media/Daten/Dokumente/Projekte/TalesOfCatventure/cedar/src/math/Matrix4f.cpp">
 			<Option target="cedar"/>
 		</Unit>
+		<Unit filename="/media/Daten/Dokumente/Projekte/TalesOfCatventure/cedar/src/math/OpenSimplexNoise.cpp">
+			<Option target="cedar"/>
+		</Unit>
 		<Unit filename="/media/Daten/Dokumente/Projekte/TalesOfCatventure/cedar/src/math/Quaternionf.cpp">
 			<Option target="cedar"/>
 		</Unit>
@@ -435,9 +464,6 @@
 			<Option target="cedar"/>
 		</Unit>
 		<Unit filename="/media/Daten/Dokumente/Projekte/TalesOfCatventure/cedar/src/multithreading/Thread.cpp">
-			<Option target="cedar"/>
-		</Unit>
-		<Unit filename="/media/Daten/Dokumente/Projekte/TalesOfCatventure/cedar/src/utils/XException.cpp">
 			<Option target="cedar"/>
 		</Unit>
 		<Unit filename="/media/Daten/Dokumente/Projekte/TalesOfCatventure/src/core/ToC.cpp">
@@ -491,10 +517,34 @@
 		<Unit filename="/media/Daten/Dokumente/Projekte/TalesOfCatventure/src/entity/Camera.h">
 			<Option target="TalesOfCatventure"/>
 		</Unit>
+		<Unit filename="/media/Daten/Dokumente/Projekte/TalesOfCatventure/src/graphics/model/ChunkModel.cpp">
+			<Option target="TalesOfCatventure"/>
+		</Unit>
+		<Unit filename="/media/Daten/Dokumente/Projekte/TalesOfCatventure/src/graphics/model/ChunkModel.h">
+			<Option target="TalesOfCatventure"/>
+		</Unit>
 		<Unit filename="/media/Daten/Dokumente/Projekte/TalesOfCatventure/src/graphics/renderer/MasterRenderer.cpp">
 			<Option target="TalesOfCatventure"/>
 		</Unit>
 		<Unit filename="/media/Daten/Dokumente/Projekte/TalesOfCatventure/src/graphics/renderer/MasterRenderer.h">
+			<Option target="TalesOfCatventure"/>
+		</Unit>
+		<Unit filename="/media/Daten/Dokumente/Projekte/TalesOfCatventure/src/graphics/renderer/TerrainRenderer.cpp">
+			<Option target="TalesOfCatventure"/>
+		</Unit>
+		<Unit filename="/media/Daten/Dokumente/Projekte/TalesOfCatventure/src/graphics/renderer/TerrainRenderer.h">
+			<Option target="TalesOfCatventure"/>
+		</Unit>
+		<Unit filename="/media/Daten/Dokumente/Projekte/TalesOfCatventure/src/world/Chunk.cpp">
+			<Option target="TalesOfCatventure"/>
+		</Unit>
+		<Unit filename="/media/Daten/Dokumente/Projekte/TalesOfCatventure/src/world/Chunk.h">
+			<Option target="TalesOfCatventure"/>
+		</Unit>
+		<Unit filename="/media/Daten/Dokumente/Projekte/TalesOfCatventure/src/world/World.cpp">
+			<Option target="TalesOfCatventure"/>
+		</Unit>
+		<Unit filename="/media/Daten/Dokumente/Projekte/TalesOfCatventure/src/world/World.h">
 			<Option target="TalesOfCatventure"/>
 		</Unit>
 		<Unit filename="/media/Daten/Dokumente/Projekte/TalesOfCatventure/CMakeLists.txt">

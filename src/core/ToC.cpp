@@ -2,7 +2,7 @@
 // Created by masy on 27.01.20.
 //
 
-#include "cedar/LoggerFactory.h"
+#include "cedar/Cedar.h"
 #include "ToC.h"
 #include "ToCLogAppender.h"
 #include "EngineThread.h"
@@ -25,17 +25,15 @@ ToC *ToC::getInstance()
 void ToC::start(const int argc, const char **args)
 {
 	ToCLogAppender *logAppender = new ToCLogAppender();
-	cedar::LoggerFactory::setQueueLogAppender(logAppender);
-	logAppender->start();
+	cedar::initEngine(logAppender, argc, args);
 
-	cedar::Thread *waitFor[1];
-	waitFor[0] = EngineThread::getInstance();
-	cedar::Thread *inputWaitfor[1];
-	inputWaitfor[0] = OpenGLThread::getInstance();
+	cedar::Thread *glWaitFor[1] = {EngineThread::getInstance()};
+	cedar::Thread *inputWaitFor[1] = {OpenGLThread::getInstance()};
+	cedar::Thread *worldWaitFor[1] = {InputThread::getInstance()};
 
-	WorldThread::getInstance()->start(1, waitFor);
-	InputThread::getInstance()->start(1, inputWaitfor);
-	OpenGLThread::getInstance()->start(1, waitFor);
+	WorldThread::getInstance()->start(1, worldWaitFor);
+	InputThread::getInstance()->start(1, inputWaitFor);
+	OpenGLThread::getInstance()->start(1, glWaitFor);
 	EngineThread::getInstance()->start()->join();
 }
 
