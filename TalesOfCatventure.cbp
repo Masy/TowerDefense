@@ -50,9 +50,7 @@
 					<Add directory="/media/Daten/Dokumente/Projekte/TalesOfCatventure/src/core/config"/>
 					<Add directory="/media/Daten/Dokumente/Projekte/TalesOfCatventure/src/core/threads"/>
 					<Add directory="/media/Daten/Dokumente/Projekte/TalesOfCatventure/src/core/logging"/>
-					<Add directory="/media/Daten/Dokumente/Projekte/TalesOfCatventure/src/graphics/model"/>
 					<Add directory="/media/Daten/Dokumente/Projekte/TalesOfCatventure/src/graphics/renderer"/>
-					<Add directory="/media/Daten/Dokumente/Projekte/TalesOfCatventure/src/world"/>
 					<Add directory="/media/Daten/Dokumente/Projekte/TalesOfCatventure/src/utils"/>
 					<Add directory="/media/Daten/Dokumente/Projekte/TalesOfCatventure/cedar/glad/include"/>
 					<Add directory="/media/Daten/Dokumente/Projekte/TalesOfCatventure/cedar/glfw/include"/>
@@ -77,9 +75,7 @@
 					<Add directory="/media/Daten/Dokumente/Projekte/TalesOfCatventure/src/core/config"/>
 					<Add directory="/media/Daten/Dokumente/Projekte/TalesOfCatventure/src/core/threads"/>
 					<Add directory="/media/Daten/Dokumente/Projekte/TalesOfCatventure/src/core/logging"/>
-					<Add directory="/media/Daten/Dokumente/Projekte/TalesOfCatventure/src/graphics/model"/>
 					<Add directory="/media/Daten/Dokumente/Projekte/TalesOfCatventure/src/graphics/renderer"/>
-					<Add directory="/media/Daten/Dokumente/Projekte/TalesOfCatventure/src/world"/>
 					<Add directory="/media/Daten/Dokumente/Projekte/TalesOfCatventure/src/utils"/>
 					<Add directory="/media/Daten/Dokumente/Projekte/TalesOfCatventure/cedar/glad/include"/>
 					<Add directory="/media/Daten/Dokumente/Projekte/TalesOfCatventure/cedar/glfw/include"/>
@@ -517,12 +513,6 @@
 		<Unit filename="/media/Daten/Dokumente/Projekte/TalesOfCatventure/src/entity/Camera.h">
 			<Option target="TalesOfCatventure"/>
 		</Unit>
-		<Unit filename="/media/Daten/Dokumente/Projekte/TalesOfCatventure/src/graphics/model/ChunkModel.cpp">
-			<Option target="TalesOfCatventure"/>
-		</Unit>
-		<Unit filename="/media/Daten/Dokumente/Projekte/TalesOfCatventure/src/graphics/model/ChunkModel.h">
-			<Option target="TalesOfCatventure"/>
-		</Unit>
 		<Unit filename="/media/Daten/Dokumente/Projekte/TalesOfCatventure/src/graphics/renderer/MasterRenderer.cpp">
 			<Option target="TalesOfCatventure"/>
 		</Unit>
@@ -533,18 +523,6 @@
 			<Option target="TalesOfCatventure"/>
 		</Unit>
 		<Unit filename="/media/Daten/Dokumente/Projekte/TalesOfCatventure/src/graphics/renderer/TerrainRenderer.h">
-			<Option target="TalesOfCatventure"/>
-		</Unit>
-		<Unit filename="/media/Daten/Dokumente/Projekte/TalesOfCatventure/src/world/Chunk.cpp">
-			<Option target="TalesOfCatventure"/>
-		</Unit>
-		<Unit filename="/media/Daten/Dokumente/Projekte/TalesOfCatventure/src/world/Chunk.h">
-			<Option target="TalesOfCatventure"/>
-		</Unit>
-		<Unit filename="/media/Daten/Dokumente/Projekte/TalesOfCatventure/src/world/World.cpp">
-			<Option target="TalesOfCatventure"/>
-		</Unit>
-		<Unit filename="/media/Daten/Dokumente/Projekte/TalesOfCatventure/src/world/World.h">
 			<Option target="TalesOfCatventure"/>
 		</Unit>
 		<Unit filename="/media/Daten/Dokumente/Projekte/TalesOfCatventure/CMakeLists.txt">

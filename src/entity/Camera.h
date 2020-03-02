@@ -34,15 +34,19 @@ private:
 	 */
 	cedar::Vector3f m_rotateVelocity;
 	/**
+	 * The rotation of the camera in the next tick in euler angles.
+	 */
+	cedar::Vector3f m_rotationEuler;
+	/**
 	 * The current rotation of the camera.
 	 */
-	cedar::Vector3f m_rotation;
+	cedar::Quaternionf m_rotation;
 	/**
 	 * The rotation of the camera in the next tick.
 	 *
 	 * <p>This is used by the OpenGL thread to interpolate between the rotations to give the impression of smooth rotation.</p>
 	 */
-	cedar::Vector3f m_newRotation;
+	cedar::Quaternionf m_newRotation;
 	/**
 	 * The current zoom level of the camera
 	 */
@@ -130,17 +134,17 @@ public:
 	 *
 	 * @return a constant pointer to the current rotation of the camera.
 	 */
-	[[nodiscard]] const cedar::Vector3f *getRotation() const;
+	[[nodiscard]] const cedar::Vector3f *getRotationEuler() const;
 	/**
-	 * Gets the linearly interpolated rotation of the camera.
+	 * Gets the spherical interpolated rotation of the camera.
 	 *
 	 * <p>The interpolation factor is calculated by the difference between the <code>currentTime</code> and
 	 * {@link #m_lastUpdate}.</p>
 	 *
 	 * @param currentTime The current time in microseconds.
-	 * @param result A pointer to the vector where the interpolated rotation is stored.
+	 * @param result A pointer to the quaternion where the interpolated rotation is stored.
 	 */
-	void getLerpedRotation(unsigned long currentTime, cedar::Vector3f *result) const;
+	void getSlerpedRotation(unsigned long currentTime, cedar::Quaternionf *result) const;
 	/**
 	 * Gets the zoom level of the camera.
 	 *

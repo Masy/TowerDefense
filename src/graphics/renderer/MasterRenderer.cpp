@@ -6,9 +6,6 @@
 #include "EngineThread.h"
 #include "cedar/Math.h"
 #include "ToC.h"
-#include "OpenGLThread.h"
-
-#include "cedar/OpenSimplexNoise.h"
 
 MasterRenderer::MasterRenderer(cedar::Window *window)
 {
@@ -50,9 +47,9 @@ void MasterRenderer::render(unsigned long currentTime, unsigned long currentTick
 {
 	Camera *camera = EngineThread::getInstance()->getCamera();
 	cedar::Vector3f lerpedPosition;
-	cedar::Vector3f lerpedRotation;
+	cedar::Quaternionf lerpedRotation;
 	camera->getLerpedPosition(currentTime, &lerpedPosition);
-	camera->getLerpedRotation(currentTime, &lerpedRotation);
+	camera->getSlerpedRotation(currentTime, &lerpedRotation);
 	this->m_viewMatrix->translation(0, 0, -(camera->getLerpedZoomLevel(currentTime)));
 	this->m_viewMatrix->rotate(&lerpedRotation);
 	this->m_viewMatrix->translate(-lerpedPosition.x, -lerpedPosition.y, -lerpedPosition.z);
