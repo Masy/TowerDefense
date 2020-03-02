@@ -16,8 +16,9 @@ Camera::Camera()
 	this->m_newPosition = cedar::Vector3f();
 	this->m_velocity = cedar::Vector3f();
 	this->m_rotateVelocity = cedar::Vector3f();
-	this->m_rotation = cedar::Vector3f();
-	this->m_newRotation = cedar::Vector3f();
+	this->m_rotationEuler = cedar::Vector3f();
+	this->m_rotation = cedar::Quaternionf();
+	this->m_newRotation = cedar::Quaternionf();
 	this->m_zoomLevel = 10.0f;
 	this->m_newZoomLevel = 10.0f;
 	this->m_zoomDelta = 0.0f;
@@ -53,10 +54,10 @@ void Camera::getLerpedPosition(const unsigned long currentTime, cedar::Vector3f 
 	this->m_position.lerp(&this->m_newPosition, result, t);
 }
 
-void Camera::getLerpedRotation(unsigned long currentTime, cedar::Vector3f *result) const
+void Camera::getSlerpedRotation(unsigned long currentTime, cedar::Quaternionf *result) const
 {
 	float t = static_cast<float>(currentTime - this->m_lastUpdate) / TICK_TIME_MICRO;
-	this->m_rotation.lerp(&this->m_newRotation, result, t);
+	this->m_rotation.slerp(&this->m_newRotation, result, t);
 }
 
 void Camera::update(const unsigned long currentTime)
@@ -85,8 +86,13 @@ void Camera::update(const unsigned long currentTime)
 		this->m_velocity.z = 0.0f;
 
 	this->m_rotation = this->m_newRotation;
-	this->m_newRotation += this->m_rotateVelocity;
-	this->m_newRotation.x = cedar::math::clamp(this->m_newRotation.x, -M_PI_2f32, M_PI_2f32);
+	this->m_rotationEuler += this->m_rotateVelocity;
+	this->m_rotationEuler.x = cedar::math::clamp(this->m_rotationEuler.x, -M_PI_2f32, M_PI_2f32);
+	if (this->m_rotationEuler.y < -M_PIf32)
+		this->m_rotationEuler.y += PI_2f32;
+	else if (this->m_rotationEuler.y > M_PIf32)
+		this->m_rotationEuler.y -= PI_2f32;
+	this->m_newRotation.rotation(&this->m_rotationEuler);
 
 	this->m_rotateVelocity *= 0.25f;
 
@@ -102,12 +108,12 @@ void Camera::update(const unsigned long currentTime)
 
 const cedar::Vector3f *Camera::getPosition() const
 {
-	return &this->m_position;
+	return &this->m_newPosition;
 }
 
-const cedar::Vector3f *Camera::getRotation() const
+const cedar::Vector3f *Camera::getRotationEuler() const
 {
-	return &this->m_rotation;
+	return &this->m_rotationEuler;
 }
 
 int Camera::getZoomLevel() const
