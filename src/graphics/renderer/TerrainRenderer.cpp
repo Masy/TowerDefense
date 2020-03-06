@@ -4,7 +4,8 @@
 
 #include "TerrainRenderer.h"
 #include "glad/glad.h"
-#include <fstream>
+#include "cedar/MasterRenderer.h"
+#include "cedar/OpenGLThread.h"
 #include "cedar/ModelRegistry.h"
 
 TerrainRenderer::TerrainRenderer()
@@ -13,7 +14,7 @@ TerrainRenderer::TerrainRenderer()
 	this->m_viewMatrix = nullptr;
 	this->m_terrainShader = nullptr;
 	this->m_uniformLocations = nullptr;
-
+	this->m_terrainModel = nullptr;
 }
 
 TerrainRenderer::~TerrainRenderer() {
@@ -21,10 +22,11 @@ TerrainRenderer::~TerrainRenderer() {
 	delete this->m_terrainModel;
 }
 
-void TerrainRenderer::init(cedar::Matrix4f *projectionMatrix, cedar::Matrix4f *viewMatrix)
+void TerrainRenderer::init()
 {
-	this->m_projectionMatrix = projectionMatrix;
-	this->m_viewMatrix = viewMatrix;
+	cedar::MasterRenderer  *masterRenderer = cedar::OpenGLThread::getInstance()->getMasterRenderer();
+	this->m_projectionMatrix = masterRenderer->getPerspectiveProjectionMatrix();
+	this->m_viewMatrix = masterRenderer->getViewMatrix();
 
 	std::string vertexSource = R"glsl(
 #version 450
@@ -75,11 +77,21 @@ void main()
 	this->m_terrainModel = cedar::ModelRegistry::loadModel("terrain", "models/terrain.bin");
 }
 
-void TerrainRenderer::render() {
-	this->m_terrainShader->bind();
-	this->m_terrainShader->setUniform4x4f(this->m_uniformLocations[0], *this->m_projectionMatrix);
-	this->m_terrainShader->setUniform4x4f(this->m_uniformLocations[1], *this->m_viewMatrix);
+void TerrainRenderer::onResize() {
+
+}
+
+void TerrainRenderer::render(unsigned long currentTime, unsigned long tickCount) {
 
 	if (this->m_terrainModel)
+	{
+		glDisable(GL_BLEND);
+		this->m_terrainShader->bind();
+		this->m_terrainShader->setUniform4x4f(this->m_uniformLocations[0], *this->m_projectionMatrix);
+		this->m_terrainShader->setUniform4x4f(this->m_uniformLocations[1], *this->m_viewMatrix);
+
 		this->m_terrainModel->render();
+
+		glEnable(GL_BLEND);
+	}
 }

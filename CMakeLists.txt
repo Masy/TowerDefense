@@ -11,29 +11,17 @@ add_executable(TalesOfCatventure
 		src/core/config/ToCConfig.cpp
 		src/core/logging/ToCLogAppender.h
 		src/core/logging/ToCLogAppender.cpp
-		src/core/threads/EngineThread.h
-		src/core/threads/EngineThread.cpp
-		src/core/threads/OpenGLThread.h
-		src/core/threads/OpenGLThread.cpp
-		src/core/threads/InputThread.h
-		src/core/threads/InputThread.cpp
-		src/core/threads/WorldThread.h
-		src/core/threads/WorldThread.cpp
-		src/graphics/renderer/MasterRenderer.h
-		src/graphics/renderer/MasterRenderer.cpp
-		src/entity/Camera.h
-		src/entity/Camera.cpp
 		src/graphics/renderer/TerrainRenderer.h
-		src/graphics/renderer/TerrainRenderer.cpp)
+		src/graphics/renderer/TerrainRenderer.cpp
+		src/input/KeyHandler.h
+		src/input/KeyHandler.cpp)
 
 target_include_directories(TalesOfCatventure PUBLIC
 		cedar/include
-		src/entity
 		src/core
 		src/core/config
-		src/core/threads
 		src/core/logging
 		src/graphics/renderer
-		src/utils)
+		src/input)
 
 target_link_libraries(TalesOfCatventure cedar)

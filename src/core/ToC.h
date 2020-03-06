@@ -5,13 +5,13 @@
 #ifndef TALESOFCATVENTURE_TOC_H
 #define TALESOFCATVENTURE_TOC_H
 
-#include <atomic>
+#include "cedar/Cedar.h"
 #include "ToCConfig.h"
 
 /**
  * The main class of the game.
  */
-class ToC
+class ToC : public Cedar
 {
 private:
 	/**
@@ -30,17 +30,10 @@ public:
 	 * @return A pointer to the ToC singleton object.
 	 */
 	static ToC *getInstance();
-	/**
-	 * Starts the game.
-	 *
-	 * @param argc The number of program arguments.
-	 * @param args The program arguments.
-	 */
-	void start(int argc, const char **args);
-	/**
-	 * Stops the game.
-	 */
-	static void stop();
+
+	void preStart() override;
+	void onStart() override;
+	void onStop() override;
 };
 
 #endif //TALESOFCATVENTURE_TOC_H
