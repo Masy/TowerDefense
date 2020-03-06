@@ -9,21 +9,22 @@
 
 #include "cedar/ShaderProgram.h"
 #include "cedar/Model.h"
+#include "cedar/Renderer.h"
 
 /**
  * Renderer that renders the terrain.
  */
-class TerrainRenderer
+class TerrainRenderer : public cedar::Renderer
 {
 private:
 	/**
 	 * A pointer to the projection matrix of the window.
 	 */
-	cedar::Matrix4f *m_projectionMatrix;
+	const cedar::Matrix4f *m_projectionMatrix;
 	/**
 	 * A pointer to the view matrix of the camera.
 	 */
-	cedar::Matrix4f *m_viewMatrix;
+	const cedar::Matrix4f *m_viewMatrix;
 	/**
 	 * A pointer to the shader program of the terrain renderer.
 	 */
@@ -47,20 +48,19 @@ public:
 	/**
 	 * Destroy the terrain renderer.
 	 */
-	~TerrainRenderer();
+	~TerrainRenderer() override ;
 
 	/**
 	 * Initializes the terrain renderer.
-	 *
-	 * @param projectionMatrix A pointer to the projection matrix of the window.
-	 * @param viewMatrix A pointer to the view matrix of the camera.
 	 */
-	void init(cedar::Matrix4f *projectionMatrix, cedar::Matrix4f *viewMatrix);
+	void init() override;
+
+	void onResize() override;
 
 	/**
 	 * Renders the terrain.
 	 */
-	void render();
+	void render(unsigned long currentTime, unsigned long tickCount) override;
 };
 
 #endif //TALESOFCATVENTURE_TERRAINRENDERER_H

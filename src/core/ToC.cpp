@@ -2,14 +2,12 @@
 // Created by masy on 27.01.20.
 //
 
-#include "cedar/Cedar.h"
+#include <cedar/EngineThread.h>
 #include "ToC.h"
 #include "ToCLogAppender.h"
-#include "EngineThread.h"
-#include "OpenGLThread.h"
-#include "InputThread.h"
-#include "WorldThread.h"
-#include <iostream>
+#include "cedar/InputThread.h"
+#include "KeyHandler.h"
+#include "TerrainRenderer.h"
 
 ToC::ToC()
 {
@@ -22,25 +20,40 @@ ToC *ToC::getInstance()
 	return instance;
 }
 
-void ToC::start(const int argc, const char **args)
+void ToC::preStart()
 {
+	config = new Config();
+
 	ToCLogAppender *logAppender = new ToCLogAppender();
-	cedar::initEngine(logAppender, argc, args);
+	LoggerFactory::setQueueLogAppender(logAppender);
+	logAppender->start();
 
-	cedar::Thread *glWaitFor[1] = {EngineThread::getInstance()};
-	cedar::Thread *inputWaitFor[1] = {OpenGLThread::getInstance()};
-	cedar::Thread *worldWaitFor[1] = {InputThread::getInstance()};
+	cedar::EngineThread::getInstance()->setInitCallback([]() {
+		EngineThread::getInstance()->setCamera(new Camera());
+	});
 
-	WorldThread::getInstance()->start(1, worldWaitFor);
-	InputThread::getInstance()->start(1, inputWaitFor);
-	OpenGLThread::getInstance()->start(1, glWaitFor);
-	EngineThread::getInstance()->start()->join();
+	cedar::OpenGLThread::getInstance()->setInitCallback([](MasterRenderer *masterRenderer) {
+		OpenGLThread::getInstance()->getWindow()->setTitle("ToC");
+		masterRenderer->addRenderer(new TerrainRenderer());
+	});
+
+	cedar::InputThread::getInstance()->setInitCallback([](InputHandler *inputHandler) {
+		KeyHandler::init(inputHandler);
+	});
 }
 
-void ToC::stop()
+void ToC::onStart()
 {
-	WorldThread::getInstance()->stop();
-	InputThread::getInstance()->stop();
-	OpenGLThread::getInstance()->stop();
-	EngineThread::getInstance()->stop();
+	cedar::InputThread::getInstance()->setTickCallback([](unsigned long currentTime, unsigned long tickCount, InputHandler *inputHandler) {
+		KeyHandler::handle(inputHandler);
+	});
+
+	cedar::InputThread::getInstance()->setStopCallback([]() {
+		KeyHandler::cleanup();
+	});
+}
+
+void ToC::onStop()
+{
+
 }
