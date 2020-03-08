@@ -6,123 +6,90 @@
 #include "cedar/Input.h"
 #include "cedar/EngineThread.h"
 #include "cedar/OpenGLThread.h"
-#include "cedar/Cedar.h"
-
-cedar::KeyCombination *KeyHandler::keyForward = nullptr;
-cedar::KeyCombination *KeyHandler::keyRight = nullptr;
-cedar::KeyCombination *KeyHandler::keyLeft = nullptr;
-cedar::KeyCombination *KeyHandler::keyBackwards = nullptr;
-cedar::KeyCombination *KeyHandler::keyUpwards = nullptr;
-cedar::KeyCombination *KeyHandler::keyDownwards = nullptr;
-cedar::KeyCombination *KeyHandler::keyMenu = nullptr;
-cedar::KeyCombination *KeyHandler::keyRightClick = nullptr;
+#include "cedar/ScreenRegistry.h"
 
 KeyHandler::KeyHandler()
 = default;
 
 void KeyHandler::init(cedar::InputHandler *inputHandler)
 {
-	int *forwardKeys = new int[1]{CEDAR_KEY_W};
-	keyForward = new cedar::KeyCombination(1, forwardKeys);
-	inputHandler->registerKeyCombination(keyForward);
-
-	int *leftKeys = new int[1]{CEDAR_KEY_A};
-	keyLeft = new cedar::KeyCombination(1, leftKeys);
-	inputHandler->registerKeyCombination(keyLeft);
-
-	int *rightKeys = new int[1]{CEDAR_KEY_D};
-	keyRight = new cedar::KeyCombination(1, rightKeys);
-	inputHandler->registerKeyCombination(keyRight);
-
-	int *backwardsKeys = new int[1]{CEDAR_KEY_S};
-	keyBackwards = new cedar::KeyCombination(1, backwardsKeys);
-	inputHandler->registerKeyCombination(keyBackwards);
-
-	int *upwardsKeys = new int[1]{CEDAR_KEY_SPACE};
-	keyUpwards = new cedar::KeyCombination(1, upwardsKeys);
-	inputHandler->registerKeyCombination(keyUpwards);
-
-	int *downwardsKeys = new int[1]{CEDAR_KEY_LEFT_SHIFT};
-	keyDownwards = new cedar::KeyCombination(1, downwardsKeys);
-	inputHandler->registerKeyCombination(keyDownwards);
-
-	int *menuKeys = new int[1]{256};
-	keyMenu = new cedar::KeyCombination(1, menuKeys);
-	inputHandler->registerKeyCombination(keyMenu);
-
-	int *rightClick = new int[1]{CEDAR_MOUSE_BUTTON_RIGHT};
-	keyRightClick = new cedar::KeyCombination(1, rightClick);
-	inputHandler->registerKeyCombination(keyRightClick);
 }
 
-void KeyHandler::handle(cedar::InputHandler *inputHandler)
+void KeyHandler::handle(const cedar::InputHandler *inputHandler)
 {
 	cedar::Camera *camera = cedar::EngineThread::getInstance()->getCamera();
 
-	cedar::Window *window = cedar::OpenGLThread::getInstance()->getWindow();
+	float deltaTime = static_cast<float>(cedar::OpenGLThread::getInstance()->getLastFrameTime());
+
 	if (camera)
 	{
-		if (window->isCursorLocked())
+		if (inputHandler->isCursorLocked())
 		{
-			cedar::Vector2d cursorDistance;
-			window->getCursorDistance(&cursorDistance);
+			float yaw = static_cast<float>(inputHandler->getCursorOffsetX()) * deltaTime * 0.25f;
+			float pitch = static_cast<float>(inputHandler->getCursorOffsetY()) * deltaTime * 0.25f;
 
-			float yaw = static_cast<float>(cursorDistance.x) * 0.002f;
-			float pitch = static_cast<float>(cursorDistance.y) * 0.002f;
-
-			camera->rotate(pitch, yaw, 0);
+				camera->rotate(pitch, yaw, 0.0f);
 		}
 
-		cedar::Vector3f move(0.0f);
-		float speed = 0.5f;
+		float yaw = 0.0;
+		if (inputHandler->isKeyDown(CEDAR_KEY_D))
+			yaw += 1.5f;
 
-		if (keyForward->isDown())
+		if (inputHandler->isKeyDown(CEDAR_KEY_A))
+			yaw -= 1.5f;
+
+		yaw *= deltaTime;
+		camera->rotateY(yaw);
+
+		cedar::Vector3f move(0.0f);
+		float speed = 100.0f * deltaTime;
+
+		if (inputHandler->isKeyDown(CEDAR_KEY_W))
 			move.z -= 1.0f;
 
-		if (keyLeft->isDown())
+		if (inputHandler->isKeyDown(CEDAR_KEY_Q))
 			move.x -= 1.0f;
 
-		if (keyRight->isDown())
+		if (inputHandler->isKeyDown(CEDAR_KEY_E))
 			move.x += 1.0f;
 
-		if (keyBackwards->isDown())
+		if (inputHandler->isKeyDown(CEDAR_KEY_S))
 			move.z += 1.0f;
 
-		if (keyUpwards->isDown())
+		if (inputHandler->isKeyDown(CEDAR_KEY_SPACE))
 			move.y += 1.0f;
 
-		if (keyDownwards->isDown())
+		if (inputHandler->isKeyDown(CEDAR_KEY_LEFT_SHIFT))
 			move.y -= 1.0f;
 
 		move.normalize();
 
-		if (move.lengthSquared() > 0)
-		{
-			move *= speed;
-			camera->moveLocal(move.x, move.y, move.z);
-		}
+		move *= speed;
+		move.rotateY(-camera->getRotationEuler()->y);
+		camera->move(move.x, move.y, move.z);
 
-		camera->zoom(static_cast<float>(window->getScrollOffsetY()) * -5.0f);
+		camera->zoom(static_cast<float>(inputHandler->getScrollOffsetY()) * -5.0f);
 	}
 
-	if (keyRightClick->isPressed())
+	if (inputHandler->isKeyPressed(CEDAR_KEY_ESCAPE))
+	{
+		cedar::Screen *screen = cedar::ScreenRegistry::getScreen("screen");
+		screen->setVisibility(!screen->isVisible());
+	}
+
+	if (inputHandler->isKeyPressed(CEDAR_KEY_F3))
+	{
+		cedar::Screen *screen = cedar::ScreenRegistry::getScreen("debug");
+		screen->setVisibility(!screen->isVisible());
+	}
+
+	cedar::Window *window = cedar::OpenGLThread::getInstance()->getWindow();
+	if (inputHandler->isKeyPressed(CEDAR_MOUSE_BUTTON_RIGHT))
 	{
 		window->hideCursor(false);
 	}
-	else if (keyRightClick->isReleased())
+	else if (inputHandler->isKeyReleased(CEDAR_MOUSE_BUTTON_RIGHT))
 	{
 		window->showCursor(false);
 	}
-}
-
-void KeyHandler::cleanup()
-{
-	delete keyForward;
-	delete keyLeft;
-	delete keyRight;
-	delete keyBackwards;
-	delete keyUpwards;
-	delete keyDownwards;
-	delete keyMenu;
-	delete keyRightClick;
 }

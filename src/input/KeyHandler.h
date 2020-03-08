@@ -7,51 +7,31 @@
 
 #include "cedar/InputHandler.h"
 
+/**
+ * The key handler of the game.
+ */
 class KeyHandler
 {
 private:
-	/**
-	 * A pointer to the key combination that moves the camera forward.
-	 */
-	static cedar::KeyCombination *keyForward;
-	/**
-	 * A pointer to the key combination that moves the camera right.
-	 */
-	static cedar::KeyCombination *keyRight;
-	/**
-	 * A pointer to the key combination that moves the camera left.
-	 */
-	static cedar::KeyCombination *keyLeft;
-	/**
-	 * A pointer to the key combination that moves the camera backwards.
-	 */
-	static cedar::KeyCombination *keyBackwards;
-	/**
-	 * A pointer to the key combination that moves the camera upwards.
-	 */
-	static cedar::KeyCombination *keyUpwards;
-	/**
-	 * A pointer to the key combination that moves the camera downwards.
-	 */
-	static cedar::KeyCombination *keyDownwards;
-	/**
-	 * A pointer to the key combination that opens the menu.
-	 */
-	static cedar::KeyCombination *keyMenu;
-	/**
-	 * A pointer to the right click key combination.
-	 */
-	static cedar::KeyCombination *keyRightClick;
-
 	/**
 	 * Creates a new key handler.
 	 */
 	KeyHandler();
 
 public:
+	/**
+	 * Initialized the key handler.
+	 *
+	 * @param inputHandler A pointer to the input handler of the game.
+	 */
 	static void init(cedar::InputHandler *inputHandler);
-	static void handle(cedar::InputHandler *inputHandler);
-	static void cleanup();
+
+	/**
+	 * Handles the input of the game.
+	 *
+	 * @param inputHandler A constant pointer to the input handler of the game.
+	 */
+	static void handle(const cedar::InputHandler *inputHandler);
 };
 
 #endif //TALESOFCATVENTURE_KEYHANDLER_H
