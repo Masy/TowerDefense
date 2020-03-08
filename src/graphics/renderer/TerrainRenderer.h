@@ -55,6 +55,9 @@ public:
 	 */
 	void init() override;
 
+	/**
+	 * Method which is called when the window is resized.
+	 */
 	void onResize() override;
 
 	/**
