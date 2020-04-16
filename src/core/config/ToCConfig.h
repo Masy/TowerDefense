@@ -6,7 +6,7 @@
 #define TALESOFCATVENTURE_TOCCONFIG_H
 
 #include <iostream>
-#include "cedar/Input.h"
+#include "cedar/Input.hpp"
 
 /**
  * The configuration class storing various values.
