@@ -5,7 +5,7 @@
 #ifndef TALESOFCATVENTURE_TOCLOGAPPENDER_H
 #define TALESOFCATVENTURE_TOCLOGAPPENDER_H
 
-#include "cedar/QueueLogAppender.h"
+#include "cedar/QueueLogAppender.hpp"
 #include <fstream>
 
 /**

@@ -10,7 +10,6 @@
 
 #ifdef WIN32
 #define stat _stat
-#define mkdir _mkdir
 #endif
 
 ToCLogAppender::ToCLogAppender() : QueueLogAppender()
@@ -23,7 +22,7 @@ ToCLogAppender::ToCLogAppender() : QueueLogAppender()
 		struct stat result{};
 		if (stat(filename, &result) == 0)
 		{
-			long mod_time = result.st_mtime;
+			auto mod_time = result.st_mtime;
 			auto time = std::time(&mod_time);
 			auto localTime = std::localtime(&time);
 			sprintf(newName, "logs/%04d-%02d-%02d_%02d-%02d-%02d.log", localTime->tm_year + 1900, localTime->tm_mon + 1, localTime->tm_mday, localTime->tm_hour, localTime->tm_min, localTime->tm_sec);
@@ -34,7 +33,11 @@ ToCLogAppender::ToCLogAppender() : QueueLogAppender()
 	}
 	else
 	{
-		int created = mkdir("logs", 0);
+#ifdef WIN32
+		int created = mkdir("logs");
+#else
+		int created = mkdir("logs", 0664);
+#endif
 	}
 }
 

@@ -5,7 +5,7 @@
 #ifndef TALESOFCATVENTURE_KEYHANDLER_H
 #define TALESOFCATVENTURE_KEYHANDLER_H
 
-#include "cedar/InputHandler.h"
+#include "cedar/InputHandler.hpp"
 
 /**
  * The key handler of the game.
@@ -29,9 +29,11 @@ public:
 	/**
 	 * Handles the input of the game.
 	 *
+	 * @param currentTime The current time in microseconds.
+	 * @param tickCount The current amount of ticks.
 	 * @param inputHandler A constant pointer to the input handler of the game.
 	 */
-	static void handle(const cedar::InputHandler *inputHandler);
+	static void handle(unsigned long currentTime, unsigned long tickCount, const cedar::InputHandler *inputHandler);
 };
 
 #endif //TALESOFCATVENTURE_KEYHANDLER_H
