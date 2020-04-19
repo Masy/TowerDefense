@@ -16,13 +16,7 @@
 class ToC : public Cedar
 {
 private:
-	Vector4f cloudWhite;
-	Vector4f gray;
-	Vector4f background;
-	Vector4f hoverBlue;
-	Vector4f pressBlue;
-	Vector4f hoverRed;
-	Vector4f pressRed;
+
 	/**
 	 * Creates a new main game object.
 	 */
@@ -33,6 +27,7 @@ public:
 	 * A pointer to the configuration of the game.
 	 */
 	ToCConfig *m_config;
+
 	/**
 	 * Gets the singleton of this class.
 	 *
@@ -40,18 +35,31 @@ public:
 	 */
 	static ToC *getInstance();
 
+	/**
+	 * Method which is called before the game starts.
+	 */
 	void preStart() override;
+
+	/**
+	 * Method which is called before all threads are started.
+	 */
 	void onStart() override;
+
+	/**
+	 * Method which is called after all threads have been stopped.
+	 */
 	void onStop() override;
 
-	void createDebugScreen(cedar::Font *font);
-
-	void createEscapeScreen(cedar::Font *font);
-
-	void createIngameScreen(cedar::Font *font, float guiScale);
-
+	/**
+	 * Loads the tower defense map.
+	 */
 	void loadMap();
 
+	/**
+	 * The initialisation callback of the OpenGL thread.
+	 *
+	 * @param masterRenderer A pointer to the master renderer.
+	 */
 	void initCallback(MasterRenderer *masterRenderer);
 };
 

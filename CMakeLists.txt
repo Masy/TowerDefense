@@ -21,7 +21,19 @@ add_executable(TalesOfCatventure
 		src/tdmap/TDMap.cpp
 		src/entity/TowerEntity.h
 		src/entity/TowerEntity.cpp
-		src/core/GameStates.h src/entity/EnemyEntity.h src/entity/EnemyEntity.cpp src/entity/AIHandler.h src/entity/AIHandler.cpp src/entity/Player.hpp src/entity/Player.cpp)
+		src/core/GameStates.h
+		src/entity/EnemyEntity.h
+		src/entity/EnemyEntity.cpp
+		src/entity/AIHandler.h
+		src/entity/AIHandler.cpp
+		src/entity/Player.hpp
+		src/entity/Player.cpp
+		src/graphics/screens/IngameScreen.hpp
+		src/graphics/screens/IngameScreen.cpp
+		src/graphics/screens/DebugScreen.hpp
+		src/graphics/screens/DebugScreen.cpp
+		src/graphics/screens/EscapeScreen.hpp
+		src/graphics/screens/EscapeScreen.cpp)
 
 target_include_directories(TalesOfCatventure PUBLIC
 		cedar/include
@@ -29,6 +41,7 @@ target_include_directories(TalesOfCatventure PUBLIC
 		src/core/config
 		src/core/logging
 		src/graphics/renderer
+		src/graphics/screens
 		src/input
 		src/tdmap
 		src/entity)

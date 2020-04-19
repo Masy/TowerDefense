@@ -113,7 +113,7 @@ void KeyHandler::handle(const unsigned long currentTime, const unsigned long tic
 
 	if (inputHandler->isKeyPressed(CEDAR_KEY_F3))
 	{
-		cedar::Screen *screen = cedar::ScreenRegistry::getScreen("debug");
+		cedar::Screen *screen = cedar::ScreenRegistry::getScreen("debugScreen");
 		screen->setVisibility(!screen->isVisible());
 	}
 
