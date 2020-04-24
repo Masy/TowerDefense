@@ -107,7 +107,7 @@ void stateLabelUpdateCallback(Element *element, const unsigned long currentTime,
 
 void DebugScreen::init(const int width, const int height, const int scale) {
 
-	Font *font_bold = FontRegistry::getFont("lazytown_bold" + std::to_string(scale));
+	std::shared_ptr<Font> font_bold = FontRegistry::getFont("lazytown_bold" + std::to_string(scale));
 	if (!font_bold)
 		throw XException("Could not initialize debug screen. Font is not loaded!");
 

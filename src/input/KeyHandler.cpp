@@ -164,7 +164,10 @@ void KeyHandler::handle(const unsigned long currentTime, const unsigned long tic
 			if (isValid)
 			{
 				map->addTower(selectedTower);
+				selectedTower->setPlaced(true);
 				map->setSelectedTower(nullptr);
+
+				map->getPlayer()->addCoins(-200);
 
 				cedar::EngineThread::getInstance()->setGameState(CEDAR_STATE_RUNNING);
 			}
@@ -172,37 +175,7 @@ void KeyHandler::handle(const unsigned long currentTime, const unsigned long tic
 	}
 	else if (gameState == CEDAR_STATE_RUNNING)
 	{
-		if (inputHandler->isKeyPressed(CEDAR_KEY_1))
-		{
-			cedar::Vector3f origin;
-			cedar::Vector3f rayDir;
-
-			cedar::OpenGLThread::getInstance()->getMasterRenderer()->getMouseRay(&origin, &rayDir);
-
-			// Calculate where the ray hits y = 0
-			float r = - (origin.y / rayDir.y);
-
-			cedar::Vector3f planeIntersection = origin + (rayDir * r);
-
-			TowerEntity *ghostTower = new TowerEntity(cedar::Entity::nextEntityId(), planeIntersection, 1.0f, 0.5f, 10.0f, 0.05f, 1.0f, TOWER_CANON);
-			ghostTower->setModel(cedar::ModelRegistry::getModel("tower"));
-
-			TDMap *map = reinterpret_cast<TDMap*>(cedar::EngineThread::getInstance()->getLoadedScene());
-			map->setSelectedTower(ghostTower);
-			cedar::EngineThread::getInstance()->setGameState(TOC_STATE_PLACING);
-		}
-		else if (inputHandler->isKeyPressed(CEDAR_KEY_2))
-		{
-			TDMap *map = reinterpret_cast<TDMap*>(cedar::EngineThread::getInstance()->getLoadedScene());
-			if (map)
-			{
-				EnemyEntity *enemy = new EnemyEntity(cedar::Entity::nextEntityId(), map->getPathPointCount(), map->getPathPoints(), 1.0f, ENEMY_LEVEL1);
-				enemy->setModel(cedar::ModelRegistry::getModel("enemy"));
-
-				map->getEntityManager()->addEntity(enemy);
-			}
-		}
-		else if (inputHandler->isKeyPressed(CEDAR_MOUSE_BUTTON_LEFT))
+		if (inputHandler->isKeyPressed(CEDAR_MOUSE_BUTTON_LEFT))
 		{
 			TDMap *map = reinterpret_cast<TDMap*>(cedar::EngineThread::getInstance()->getLoadedScene());
 			if (map)

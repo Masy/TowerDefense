@@ -156,6 +156,8 @@ void ToC::initCallback(MasterRenderer *masterRenderer)
 	masterRenderer->addRenderer(SceneRenderer::getInstance());
 	masterRenderer->setClearColor(Vector4f( 0x27 / 255.0f, 0x87 / 255.0f, 0xB8 / 255.0f, 1.0f));
 
+	FontRegistry::loadFont("lazytown3", "resources/fonts/lazytown.ptf", 3, 0, 255, CEDAR_RENDERING_SHARP);
+
 	FontRegistry::loadFont("lazytown_bold2", "resources/fonts/lazytown_bold.ptf", 2, 0, 255, CEDAR_RENDERING_SHARP);
 	FontRegistry::loadFont("lazytown_bold3", "resources/fonts/lazytown_bold.ptf", 3, 0, 255, CEDAR_RENDERING_SHARP);
 
