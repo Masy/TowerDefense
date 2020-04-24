@@ -7,7 +7,8 @@
 #include "TowerEntity.h"
 #include "EnemyEntity.h"
 
-TowerEntity::TowerEntity(const unsigned int entityId, const cedar::Vector3f &position, const float radius, const float height, const float attackRadius,
+TowerEntity::TowerEntity(const unsigned int entityId, const cedar::Vector3f &position, const float radius, const float height,
+						 const float attackRadius,
 						 const float attackSpeed, const float damage, const TowerType towerType) : Entity(entityId, position)
 {
 	this->m_radius = radius;
@@ -17,31 +18,35 @@ TowerEntity::TowerEntity(const unsigned int entityId, const cedar::Vector3f &pos
 	this->m_damage = damage;
 	this->m_towerType = towerType;
 	this->m_attackTick = static_cast<unsigned long>(1.0 / attackSpeed);
+	this->m_placed = false;
 	this->m_ticksAlive = 0;
 }
 
 void TowerEntity::update(const unsigned long currentTime, const unsigned long tickCount)
 {
-	TDMap *map = dynamic_cast<TDMap*>(cedar::EngineThread::getInstance()->getLoadedScene());
-
-	float radiusSquared = this->m_attackRadius * this->m_attackRadius;
-
-	auto it = map->getEntityManager()->getEntities()->begin();
-	for (const auto &pair : *map->getEntityManager()->getEntities())
+	if (this->m_placed)
 	{
-		std::shared_ptr<Entity> entity = pair.second;
-		if (entity->getPosition().distanceSquared(this->m_position) < radiusSquared)
+		TDMap *map = dynamic_cast<TDMap *>(cedar::EngineThread::getInstance()->getLoadedScene());
+
+		float radiusSquared = this->m_attackRadius * this->m_attackRadius;
+
+		auto it = map->getEntityManager()->getEntities()->begin();
+		for (const auto &pair : *map->getEntityManager()->getEntities())
 		{
-			if (this->m_ticksAlive % this->m_attackTick == 0)
+			std::shared_ptr<Entity> entity = pair.second;
+			if (entity->getPosition().distanceSquared(this->m_position) < radiusSquared)
 			{
-				EnemyEntity *enemy = dynamic_cast<EnemyEntity*>(entity.get());
-				enemy->damage(this->m_damage);
-				if (enemy->getHealth() == 0.0f)
+				if (this->m_ticksAlive % this->m_attackTick == 0)
 				{
-					map->getPlayer()->addCoins(1);
+					EnemyEntity *enemy = dynamic_cast<EnemyEntity *>(entity.get());
+					enemy->damage(this->m_damage);
+					if (enemy->getHealth() == 0.0f)
+					{
+						map->getPlayer()->addCoins(1);
+					}
 				}
+				break;
 			}
-			break;
 		}
 	}
 
@@ -54,11 +59,13 @@ float TowerEntity::getRadius() const
 	return this->m_radius;
 }
 
-float TowerEntity::getHeight() const {
+float TowerEntity::getHeight() const
+{
 	return this->m_height;
 }
 
-void TowerEntity::setHeight(const float newHeight) {
+void TowerEntity::setHeight(const float newHeight)
+{
 	this->m_height = newHeight;
 }
 
@@ -105,4 +112,14 @@ cedar::Vector3f TowerEntity::getTint() const
 void TowerEntity::setTint(const cedar::Vector3f &newTint)
 {
 	this->m_tint = newTint;
+}
+
+bool TowerEntity::isPlaced() const
+{
+	return this->m_placed;
+}
+
+void TowerEntity::setPlaced(const bool isPlaced)
+{
+	this->m_placed = isPlaced;
 }

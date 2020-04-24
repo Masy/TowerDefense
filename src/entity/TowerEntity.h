@@ -26,6 +26,7 @@ protected:
 	unsigned long m_attackTick;
 	TowerType m_towerType;
 	cedar::Vector3f m_tint;
+	bool m_placed;
 
 	int m_ticksAlive;
 
@@ -57,6 +58,10 @@ public:
 
 	[[nodiscard]] cedar::Vector3f getTint() const;
 	void setTint(const cedar::Vector3f &newTint);
+
+	[[nodiscard]] bool isPlaced() const;
+
+	void setPlaced(bool isPlaced);
 
 };
 

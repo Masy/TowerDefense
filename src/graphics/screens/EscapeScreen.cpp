@@ -6,6 +6,7 @@
 #include <cedar/FontRegistry.hpp>
 #include <cedar/EngineThread.hpp>
 #include <cedar/Cedar.hpp>
+#include <cedar/TextureRegistry.hpp>
 #include "EscapeScreen.hpp"
 
 EscapeScreen::EscapeScreen()
@@ -38,45 +39,45 @@ void exitButtonInteractCallback(const Element *element)
 
 void EscapeScreen::init(const int width, const int height, const int scale)
 {
-
-	Font *font_bold = FontRegistry::getFont("lazytown_bold" + std::to_string(scale));
-	if (!font_bold)
+	std::shared_ptr<Font> font = FontRegistry::getFont("lazytown" + std::to_string(scale));
+	if (!font)
 		throw XException("Could not initialize escape screen. Font is not loaded!");
+
+	std::shared_ptr<Texture> guiTexture = TextureRegistry::getTexture("gui");
+	if (!guiTexture)
+		throw XException("Could not initializes escape screen. GUI texture is not loaded!");
 
 	float guiScale = static_cast<float>(scale);
 	Vector4f cloudWhite(0xEC / 255.0f, 0xF0 / 255.0f, 0xF0 / 255.0f, 1.0f);
 	Vector4f gray = Vector4f(0xBD / 255.0f, 0xC3 / 255.0f, 0xC7 / 255.0f, 1.0f);
-	Vector4f background(0x95 / 255.0f, 0xA5 / 255.0f, 0xA5 / 255.0f, 1.0f);
-	Vector4f hoverBlue(0x34 / 255.0f, 0x98 / 255.0f, 0xDB / 255.0f, 1.0f);
-	Vector4f pressBlue(0x29 / 255.0f, 0x80 / 255.0f, 0xB9 / 255.0f, 1.0f);
-	Vector4f hoverRed(0xE7 / 255.0f, 0x4C / 255.0f, 0x3C / 255.0f, 1.0f);
-	Vector4f pressRed(0xC0 / 255.0f, 0x39 / 255.0f, 0x2B / 255.0f, 1.0f);
 
 	float centerX = static_cast<float>(width) * 0.5f;
 	float centerY = static_cast<float>(height) * 0.5f;
 	float buttonWidth = 90.0f * guiScale;
-	float buttonHeight = 21 * guiScale;
-	float offset = buttonHeight + (8 * guiScale);
+	float buttonHeight = 24 * guiScale;
+	float offset = buttonHeight + (4 * guiScale);
 	unsigned int alignment = CEDAR_ALIGNMENT_MIDDLE | CEDAR_ALIGNMENT_CENTER;
 
-	this->m_optionButton = new Button(centerX, centerY - offset, 0, buttonWidth, buttonHeight, "Options", font_bold, cloudWhite, alignment);
-	this->m_optionButton->setBackgroundColor(background);
-	this->m_optionButton->setHoveredBackgroundColor(hoverBlue);
-	this->m_optionButton->setPressedBackgroundColor(pressBlue);
-	this->m_optionButton->setPressedTextColor(gray);
+	float pixelSize = 1.0f / 256.0f;
+	Vector4f normalButtonDefaultUV(108.0f * pixelSize, 48.0f * pixelSize, 198.0f * pixelSize, 72.0f * pixelSize);
+	Vector4f normalButtonHoveredUV(108.0f * pixelSize, 72.0f * pixelSize, 198.0f * pixelSize, 96.0f * pixelSize);
+	Vector4f normalButtonPressedUV(108.0f * pixelSize, 96.0f * pixelSize, 198.0f * pixelSize, 120.0f * pixelSize);
 
-	this->m_closeButton = new Button(centerX, centerY, 1, buttonWidth, buttonHeight, "Close", font_bold, cloudWhite, alignment);
-	this->m_closeButton->setBackgroundColor(background);
-	this->m_closeButton->setHoveredBackgroundColor(hoverBlue);
-	this->m_closeButton->setPressedBackgroundColor(pressBlue);
-	this->m_closeButton->setPressedTextColor(gray);
+	this->m_optionButton = new ImageButton(centerX, centerY - offset, 0, buttonWidth, buttonHeight,
+										   guiTexture, normalButtonDefaultUV, normalButtonHoveredUV, normalButtonPressedUV,
+										   "Options", font, cloudWhite, cloudWhite, gray, alignment);
+
+	this->m_closeButton = new ImageButton(centerX, centerY, 1, buttonWidth, buttonHeight,
+										  guiTexture, normalButtonDefaultUV, normalButtonHoveredUV, normalButtonPressedUV,
+										  "Close", font, cloudWhite, cloudWhite, gray, alignment);
 	this->m_closeButton->setInteractCallback(closeButtonInteractCallback);
 
-	this->m_exitButton = new Button(centerX, centerY + offset + buttonHeight, 2, buttonWidth, buttonHeight, "Exit", font_bold, cloudWhite, alignment);
-	this->m_exitButton->setBackgroundColor(background);
-	this->m_exitButton->setHoveredBackgroundColor(hoverRed);
-	this->m_exitButton->setPressedBackgroundColor(pressRed);
-	this->m_exitButton->setPressedTextColor(gray);
+	Vector4f redButtonDefaultUV(108.0f * pixelSize, 120.0f * pixelSize, 198.0f * pixelSize, 144.0f * pixelSize);
+	Vector4f redButtonHoveredUV(108.0f * pixelSize, 144.0f * pixelSize, 198.0f * pixelSize, 168.0f * pixelSize);
+	Vector4f redButtonPressedUV(108.0f * pixelSize, 168.0f * pixelSize, 198.0f * pixelSize, 192.0f * pixelSize);
+	this->m_exitButton = new ImageButton(centerX, centerY + offset + (4 * guiScale), 2, buttonWidth, buttonHeight,
+			guiTexture, redButtonDefaultUV, redButtonHoveredUV,redButtonPressedUV,
+			"Exit", font, cloudWhite, cloudWhite, gray, alignment);
 	this->m_exitButton->setInteractCallback(exitButtonInteractCallback);
 
 	this->addElement(this->m_optionButton);

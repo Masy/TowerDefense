@@ -5,6 +5,7 @@
 #ifndef TALESOFCATVENTURE_INGAMESCREEN_HPP
 #define TALESOFCATVENTURE_INGAMESCREEN_HPP
 
+#include <cedar/ImageButton.hpp>
 #include "cedar/Screen.hpp"
 #include "cedar/Label.hpp"
 #include "cedar/Image.hpp"
@@ -25,7 +26,6 @@ private:
 	 * A pointer to the coin icon.
 	 */
 	Image *m_coinIcon;
-
 	/**
 	 * A pointer to the health label.
 	 */
@@ -38,6 +38,38 @@ private:
 	 * A pointer to the round label.
 	 */
 	Label *m_roundLabel;
+	/**
+	 * A pointer to the shop.
+	 */
+	Image *m_shopBackground;
+	/**
+	 * A pointer to the tower buy button.
+	 */
+	ImageButton *m_buyTowerButton;
+	/**
+	 * A pointer to the tower coin icon.
+	 */
+	Image *m_towerCoinIcon;
+	/**
+	 * A pointer to the tower coin label.
+	 */
+	Label *m_towerCoinLabel;
+	/**
+	 * A pointer to the tower attack range icon.
+	 */
+	Image *m_towerAttackRangeIcon;
+	/**
+	 * A pointer to the tower attack range label.
+	 */
+	Label *m_towerAttackRangeLabel;
+	/**
+	 * A pointer to the tower attack speed icon.
+	 */
+	Image *m_towerAttackSpeedIcon;
+	/**
+	 * A pointer to the tower attack speed label.
+	 */
+	Label *m_towerAttackSpeedLabel;
 
 public:
 	/**

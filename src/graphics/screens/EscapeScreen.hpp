@@ -6,7 +6,7 @@
 #define TALESOFCATVENTURE_ESCAPESCREEN_HPP
 
 #include "cedar/Screen.hpp"
-#include "cedar/Button.hpp"
+#include "cedar/ImageButton.hpp"
 
 using namespace cedar;
 
@@ -19,15 +19,15 @@ private:
 	/**
 	 * A pointer to the option button.
 	 */
-	Button *m_optionButton;
+	ImageButton *m_optionButton;
 	/**
 	 * A pointer to the close button.
 	 */
-	Button *m_closeButton;
+	ImageButton *m_closeButton;
 	/**
 	 * A pointer to the exit button.
 	 */
-	Button *m_exitButton;
+	ImageButton *m_exitButton;
 
 public:
 	/**
