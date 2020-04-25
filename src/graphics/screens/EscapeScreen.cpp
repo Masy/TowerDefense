@@ -59,9 +59,9 @@ void EscapeScreen::init(const int width, const int height, const int scale)
 	unsigned int alignment = CEDAR_ALIGNMENT_MIDDLE | CEDAR_ALIGNMENT_CENTER;
 
 	float pixelSize = 1.0f / 256.0f;
-	Vector4f normalButtonDefaultUV(108.0f * pixelSize, 48.0f * pixelSize, 198.0f * pixelSize, 72.0f * pixelSize);
-	Vector4f normalButtonHoveredUV(108.0f * pixelSize, 72.0f * pixelSize, 198.0f * pixelSize, 96.0f * pixelSize);
-	Vector4f normalButtonPressedUV(108.0f * pixelSize, 96.0f * pixelSize, 198.0f * pixelSize, 120.0f * pixelSize);
+	Vector4f normalButtonDefaultUV(108.0f * pixelSize, 24.0f * pixelSize, 198.0f * pixelSize, 48.0f * pixelSize);
+	Vector4f normalButtonHoveredUV(108.0f * pixelSize, 48.0f * pixelSize, 198.0f * pixelSize, 72.0f * pixelSize);
+	Vector4f normalButtonPressedUV(108.0f * pixelSize, 72.0f * pixelSize, 198.0f * pixelSize, 96.0f * pixelSize);
 
 	this->m_optionButton = new ImageButton(centerX, centerY - offset, 0, buttonWidth, buttonHeight,
 										   guiTexture, normalButtonDefaultUV, normalButtonHoveredUV, normalButtonPressedUV,
@@ -72,9 +72,9 @@ void EscapeScreen::init(const int width, const int height, const int scale)
 										  "Close", font, cloudWhite, cloudWhite, gray, alignment);
 	this->m_closeButton->setInteractCallback(closeButtonInteractCallback);
 
-	Vector4f redButtonDefaultUV(108.0f * pixelSize, 120.0f * pixelSize, 198.0f * pixelSize, 144.0f * pixelSize);
-	Vector4f redButtonHoveredUV(108.0f * pixelSize, 144.0f * pixelSize, 198.0f * pixelSize, 168.0f * pixelSize);
-	Vector4f redButtonPressedUV(108.0f * pixelSize, 168.0f * pixelSize, 198.0f * pixelSize, 192.0f * pixelSize);
+	Vector4f redButtonDefaultUV(108.0f * pixelSize, 96.0f * pixelSize, 198.0f * pixelSize, 120.0f * pixelSize);
+	Vector4f redButtonHoveredUV(108.0f * pixelSize, 120.0f * pixelSize, 198.0f * pixelSize, 144.0f * pixelSize);
+	Vector4f redButtonPressedUV(108.0f * pixelSize, 144.0f * pixelSize, 198.0f * pixelSize, 168.0f * pixelSize);
 	this->m_exitButton = new ImageButton(centerX, centerY + offset + (4 * guiScale), 2, buttonWidth, buttonHeight,
 			guiTexture, redButtonDefaultUV, redButtonHoveredUV,redButtonPressedUV,
 			"Exit", font, cloudWhite, cloudWhite, gray, alignment);

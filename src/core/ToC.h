@@ -56,6 +56,11 @@ public:
 	void loadMap();
 
 	/**
+	 * Initializes the tower information.
+	 */
+	void initTowers();
+
+	/**
 	 * The initialisation callback of the OpenGL thread.
 	 *
 	 * @param masterRenderer A pointer to the master renderer.

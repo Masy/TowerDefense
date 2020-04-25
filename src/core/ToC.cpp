@@ -37,15 +37,6 @@ ToC *ToC::getInstance()
 void ToC::loadMap()
 {
 	unsigned char bitmask;
-	Model *towerModel = cedar::ModelRegistry::loadBMFModel("tower", "resources/models/towerBase.bmf", &bitmask);
-	glBindVertexArray(towerModel->getVertexArrayId());
-	glBindBuffer(GL_ARRAY_BUFFER, towerModel->getVertexBufferId());
-	glVertexAttribPointer(0, 3, GL_FLOAT, false, sizeof(float) * 8, nullptr); // vertex position
-	glVertexAttribPointer(1, 2, GL_FLOAT, false, sizeof(float) * 8, (const void*) 12); // vertex uv
-	glVertexAttribPointer(2, 3, GL_FLOAT, false, sizeof(float) * 8, (const void*) 20); // vertex normal
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-	glBindVertexArray(0);
-
 	Model *enemyModel = cedar::ModelRegistry::loadBMFModel("enemy", "resources/models/enemy.bmf", &bitmask);
 	glBindVertexArray(enemyModel->getVertexArrayId());
 	glBindBuffer(GL_ARRAY_BUFFER, enemyModel->getVertexBufferId());
@@ -150,6 +141,54 @@ void ToC::loadMap()
 	EngineThread::getInstance()->loadScene(map);
 }
 
+void ToC::initTowers() {
+	unsigned char bitmask;
+	Model *towerModel = cedar::ModelRegistry::loadBMFModel("towerCanon_level0", "resources/models/towerCanon_level0.bmf", &bitmask);
+	glBindVertexArray(towerModel->getVertexArrayId());
+	glBindBuffer(GL_ARRAY_BUFFER, towerModel->getVertexBufferId());
+	glVertexAttribPointer(0, 3, GL_FLOAT, false, sizeof(float) * 8, nullptr); // vertex position
+	glVertexAttribPointer(1, 2, GL_FLOAT, false, sizeof(float) * 8, (const void*) 12); // vertex uv
+	glVertexAttribPointer(2, 3, GL_FLOAT, false, sizeof(float) * 8, (const void*) 20); // vertex normal
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBindVertexArray(0);
+
+	towerModel = cedar::ModelRegistry::loadBMFModel("towerCanon_level1", "resources/models/towerCanon_level1.bmf", &bitmask);
+	glBindVertexArray(towerModel->getVertexArrayId());
+	glBindBuffer(GL_ARRAY_BUFFER, towerModel->getVertexBufferId());
+	glVertexAttribPointer(0, 3, GL_FLOAT, false, sizeof(float) * 8, nullptr); // vertex position
+	glVertexAttribPointer(1, 2, GL_FLOAT, false, sizeof(float) * 8, (const void*) 12); // vertex uv
+	glVertexAttribPointer(2, 3, GL_FLOAT, false, sizeof(float) * 8, (const void*) 20); // vertex normal
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBindVertexArray(0);
+
+	towerModel = cedar::ModelRegistry::loadBMFModel("towerCanon_level2", "resources/models/towerCanon_level2.bmf", &bitmask);
+	glBindVertexArray(towerModel->getVertexArrayId());
+	glBindBuffer(GL_ARRAY_BUFFER, towerModel->getVertexBufferId());
+	glVertexAttribPointer(0, 3, GL_FLOAT, false, sizeof(float) * 8, nullptr); // vertex position
+	glVertexAttribPointer(1, 2, GL_FLOAT, false, sizeof(float) * 8, (const void*) 12); // vertex uv
+	glVertexAttribPointer(2, 3, GL_FLOAT, false, sizeof(float) * 8, (const void*) 20); // vertex normal
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBindVertexArray(0);
+
+	towerModel = cedar::ModelRegistry::loadBMFModel("towerCanon_level3", "resources/models/towerCanon_level3.bmf", &bitmask);
+	glBindVertexArray(towerModel->getVertexArrayId());
+	glBindBuffer(GL_ARRAY_BUFFER, towerModel->getVertexBufferId());
+	glVertexAttribPointer(0, 3, GL_FLOAT, false, sizeof(float) * 8, nullptr); // vertex position
+	glVertexAttribPointer(1, 2, GL_FLOAT, false, sizeof(float) * 8, (const void*) 12); // vertex uv
+	glVertexAttribPointer(2, 3, GL_FLOAT, false, sizeof(float) * 8, (const void*) 20); // vertex normal
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBindVertexArray(0);
+
+	int levels = 4;
+	LevelInfo *canonLevelInfo = new LevelInfo[levels];
+	canonLevelInfo[0].set(200, 1.0f, 2.2f, 1.0f, 5.0f, 1, "towerCanon_level0");
+	canonLevelInfo[1].set(50, 1.0f, 2.2f, 1.0f, 5.0f, 2, "towerCanon_level1");
+	canonLevelInfo[2].set(100, 1.0f, 2.2f, 2.0f, 5.0f, 2, "towerCanon_level2");
+	canonLevelInfo[3].set(200, 1.0f, 2.2f, 4.0f, 6.0f, 2, "towerCanon_level3");
+
+	TowerInfo::registerTowerInfo(TOWER_CANON, new TowerInfo("Canon", levels, canonLevelInfo));
+}
+
 void ToC::initCallback(MasterRenderer *masterRenderer)
 {
 	OpenGLThread::getInstance()->getWindow()->setTitle("ToC");
@@ -169,6 +208,9 @@ void ToC::initCallback(MasterRenderer *masterRenderer)
 
 	Window *window = OpenGLThread::getInstance()->getWindow();
 
+	this->loadMap();
+	this->initTowers();
+
 	IngameScreen *ingameScreen = new IngameScreen();
 	ingameScreen->init(window->getWidth(), window->getHeight(), 3);
 
@@ -177,8 +219,6 @@ void ToC::initCallback(MasterRenderer *masterRenderer)
 
 	EscapeScreen *escapeScreen = new EscapeScreen();
 	escapeScreen->init(window->getWidth(), window->getHeight(), 3);
-
-	this->loadMap();
 }
 
 void ToC::preStart()

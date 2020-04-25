@@ -6,14 +6,7 @@
 #define TALESOFCATVENTURE_TOWERENTITY_H
 
 #include "cedar/Entity.hpp"
-
-enum TowerType
-{
-	TOWER_CANON,
-	TOWER_MAGIC,
-	TOWER_TESLA,
-	TOWER_FREEZER
-};
+#include "Towers.hpp"
 
 class TowerEntity : public cedar::Entity
 {
@@ -31,7 +24,7 @@ protected:
 	int m_ticksAlive;
 
 public:
-	TowerEntity(unsigned int entityId, const cedar::Vector3f &position, float radius, float m_height, float attackRadius, float attackSpeed, float damage, TowerType towerType);
+	TowerEntity(unsigned int entityId, const cedar::Vector3f &position, const TowerType &towerType);
 
 	/**
 	 * Updates the entity.
