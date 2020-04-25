@@ -66,10 +66,16 @@ void EscapeScreen::init(const int width, const int height, const int scale)
 	this->m_optionButton = new ImageButton(centerX, centerY - offset, 0, buttonWidth, buttonHeight,
 										   guiTexture, normalButtonDefaultUV, normalButtonHoveredUV, normalButtonPressedUV,
 										   "Options", font, cloudWhite, cloudWhite, gray, alignment);
+	this->m_optionButton->setDefaultCaptionOffset(- 1.0f - (2.0f * guiScale));
+	this->m_optionButton->setHoveredCaptionOffset(- 1.0f - (2.0f * guiScale));
+	this->m_optionButton->setPressedCaptionOffset(- 1.0f);
 
 	this->m_closeButton = new ImageButton(centerX, centerY, 1, buttonWidth, buttonHeight,
 										  guiTexture, normalButtonDefaultUV, normalButtonHoveredUV, normalButtonPressedUV,
 										  "Close", font, cloudWhite, cloudWhite, gray, alignment);
+	this->m_closeButton->setDefaultCaptionOffset(- 1.0f - (2.0f * guiScale));
+	this->m_closeButton->setHoveredCaptionOffset(- 1.0f - (2.0f * guiScale));
+	this->m_closeButton->setPressedCaptionOffset(- 1.0f);
 	this->m_closeButton->setInteractCallback(closeButtonInteractCallback);
 
 	Vector4f redButtonDefaultUV(108.0f * pixelSize, 96.0f * pixelSize, 198.0f * pixelSize, 120.0f * pixelSize);
@@ -78,6 +84,9 @@ void EscapeScreen::init(const int width, const int height, const int scale)
 	this->m_exitButton = new ImageButton(centerX, centerY + offset + (4 * guiScale), 2, buttonWidth, buttonHeight,
 			guiTexture, redButtonDefaultUV, redButtonHoveredUV,redButtonPressedUV,
 			"Exit", font, cloudWhite, cloudWhite, gray, alignment);
+	this->m_exitButton->setDefaultCaptionOffset(- 1.0f - (2.0f * guiScale));
+	this->m_exitButton->setHoveredCaptionOffset(- 1.0f - (2.0f * guiScale));
+	this->m_exitButton->setPressedCaptionOffset(- 1.0f);
 	this->m_exitButton->setInteractCallback(exitButtonInteractCallback);
 
 	this->addElement(this->m_optionButton);

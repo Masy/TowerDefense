@@ -2,22 +2,25 @@
 // Created by masy on 12.03.20.
 //
 
-#include <cedar/EngineThread.hpp>
-#include <TDMap.h>
 #include "TowerEntity.h"
+#include <cedar/EngineThread.hpp>
+#include <cedar/ModelRegistry.hpp>
+#include "TDMap.h"
 #include "EnemyEntity.h"
 
 TowerEntity::TowerEntity(const unsigned int entityId, const cedar::Vector3f &position, const TowerType &towerType)
 		: Entity(entityId, position)
 {
 	const LevelInfo *levelInfo = TowerInfo::getTowerInfo(towerType)->getLevelInfo(0);
+	this->m_model = ModelRegistry::getModel(levelInfo->getModelName());
 	this->m_radius = levelInfo->getRadius();
 	this->m_height = levelInfo->getHeight();
-	this->m_attackRadius = static_cast<float>(levelInfo->getAttackRadius());
-	this->m_attackSpeed = 1.0f / 20.0f * static_cast<float>(levelInfo->getAttackSpeed());
-	this->m_damage = static_cast<float>(levelInfo->getDamage());
+	this->m_level = 0;
+	this->m_attackRadius = levelInfo->getAttackRadius();
+	this->m_attackSpeed = levelInfo->getAttackSpeed();
+	this->m_damage = levelInfo->getDamage();
 	this->m_towerType = towerType;
-	this->m_attackTick = static_cast<unsigned long>(1.0 / this->m_attackSpeed);
+	this->m_attackTick = static_cast<unsigned long>(20 / this->m_attackSpeed);
 	this->m_placed = false;
 	this->m_ticksAlive = 0;
 }
@@ -39,7 +42,7 @@ void TowerEntity::update(const unsigned long currentTime, const unsigned long ti
 				if (this->m_ticksAlive % this->m_attackTick == 0)
 				{
 					EnemyEntity *enemy = dynamic_cast<EnemyEntity *>(entity.get());
-					enemy->damage(this->m_damage);
+					enemy->damage(static_cast<float>(this->m_damage));
 					if (enemy->getHealth() == 0.0f)
 					{
 						map->getPlayer()->addCoins(1);
@@ -64,39 +67,43 @@ float TowerEntity::getHeight() const
 	return this->m_height;
 }
 
-void TowerEntity::setHeight(const float newHeight)
+unsigned int TowerEntity::getLevel() const
 {
-	this->m_height = newHeight;
+	return this->m_level;
 }
 
-float TowerEntity::getAttackRadius() const
+void TowerEntity::setLevel(unsigned int newLevel)
+{
+	const TowerInfo *towerInfo = TowerInfo::getTowerInfo(this->m_towerType);
+
+	newLevel = std::min(newLevel, towerInfo->getLevels() - 1);
+
+	if (newLevel != this->m_level)
+	{
+		this->m_level = newLevel;
+
+		const LevelInfo *levelInfo = towerInfo->getLevelInfo(newLevel);
+		this->m_damage = levelInfo->getDamage();
+		this->m_attackRadius = levelInfo->getAttackRadius();
+		this->m_attackSpeed = levelInfo->getAttackSpeed();
+		this->m_attackTick = static_cast<unsigned long>(20 / levelInfo->getAttackSpeed());
+		this->m_model = ModelRegistry::getModel(levelInfo->getModelName());
+	}
+}
+
+int TowerEntity::getAttackRadius() const
 {
 	return this->m_attackRadius;
 }
 
-void TowerEntity::setAttackRadius(const float newAttackRadius)
-{
-	this->m_attackRadius = newAttackRadius;
-}
-
-float TowerEntity::getAttackSpeed() const
+int TowerEntity::getAttackSpeed() const
 {
 	return this->m_attackSpeed;
 }
 
-void TowerEntity::setAttackSpeed(const float newAttackSpeed)
-{
-	this->m_attackSpeed = newAttackSpeed;
-}
-
-float TowerEntity::getDamage() const
+int TowerEntity::getDamage() const
 {
 	return this->m_damage;
-}
-
-void TowerEntity::setDamage(const float newDamage)
-{
-	this->m_damage = newDamage;
 }
 
 TowerType TowerEntity::getTowerType() const

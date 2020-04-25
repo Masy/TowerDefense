@@ -5,10 +5,11 @@
 #ifndef TALESOFCATVENTURE_INGAMESCREEN_HPP
 #define TALESOFCATVENTURE_INGAMESCREEN_HPP
 
-#include <cedar/ImageButton.hpp>
+#include "cedar/ImageButton.hpp"
 #include "cedar/Screen.hpp"
 #include "cedar/Label.hpp"
 #include "cedar/Image.hpp"
+#include "TowerEntity.h"
 
 using namespace cedar;
 
@@ -79,6 +80,70 @@ private:
 	 */
 	Label *m_canonAttackSpeedLabel;
 
+	/**
+	 * A pointer to the selected tower name label.
+	 */
+	Label *m_selectedTowerLabel;
+	/**
+	 * A pointer to the selected tower level label.
+	 */
+	Label *m_selectedTowerLevelLabel;
+	/**
+	 * A pointer to the selected tower attack radius icon.
+	 */
+	Image *m_selectedTowerAttackRadiusIcon;
+	/**
+	 * A pointer to the selected tower attack radius label.
+	 */
+	Label *m_selectedTowerAttackRadiusLabel;
+	/**
+	 * A pointer to the upgraded selected tower attack radius label.
+	 */
+	Label *m_selectedTowerUpgradedAttackRadiusLabel;
+	/**
+	 * A pointer to the selected tower damage icon.
+	 */
+	Image *m_selectedTowerDamageIcon;
+	/**
+	 * A pointer to the selected tower damage label.
+	 */
+	Label *m_selectedTowerDamageLabel;
+	/**
+	 * A pointer to the upgraded selected tower damage label.
+	 */
+	Label *m_selectedTowerUpgradedDamageLabel;
+	/**
+	 * A pointer to the selected tower attack speed icon.
+	 */
+	Image *m_selectedTowerAttackSpeedIcon;
+	/**
+	 * A pointer to the selected tower attack speed label.
+	 */
+	Label *m_selectedTowerAttackSpeedLabel;
+	/**
+	 * A pointer to the upgraded selected tower attack speed label.
+	 */
+	Label *m_selectedTowerUpgradedAttackSpeedLabel;
+	/**
+	 * A pointer to the selected tower price icon.
+	 */
+	Image *m_selectedTowerPriceIcon;
+	/**
+	 * A pointer to the selected tower price label.
+	 */
+	Label *m_selectedTowerPriceLabel;
+	/**
+	 * A pointer to the upgrade button.
+	 */
+	ImageButton *m_upgradeTowerButton;
+
+	/**
+	 * Sets the visibility of all elements related to the upgrade area.
+	 *
+	 * @param visible Whether the elements will be visible or not.
+	 */
+	void setUpgradeAreaVisible(bool visible);
+
 public:
 	/**
 	 * Creates a new ingame screen.
@@ -98,6 +163,21 @@ public:
 	 * @param guiScale The scale of the gui.
 	 */
 	void init(int width, int height, int guiScale);
+
+	/**
+	 * Method which updates all elements in the screen.
+	 *
+	 * @param currentTime The current time of the frame in microseconds.
+	 * @param tickCount The current tick count.
+	 */
+	void onUpdate(unsigned long currentTime, unsigned long currentTick) override;
+
+	/**
+	 * Sets the selected tower of the upgrade area.
+	 *
+	 * @param selectedTower A pointer to the selected tower.
+	 */
+	void setSelectedTower(TowerEntity *selectedTower);
 };
 
 #endif //TALESOFCATVENTURE_INGAMESCREEN_HPP
