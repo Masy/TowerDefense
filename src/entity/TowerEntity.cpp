@@ -7,17 +7,17 @@
 #include "TowerEntity.h"
 #include "EnemyEntity.h"
 
-TowerEntity::TowerEntity(const unsigned int entityId, const cedar::Vector3f &position, const float radius, const float height,
-						 const float attackRadius,
-						 const float attackSpeed, const float damage, const TowerType towerType) : Entity(entityId, position)
+TowerEntity::TowerEntity(const unsigned int entityId, const cedar::Vector3f &position, const TowerType &towerType)
+		: Entity(entityId, position)
 {
-	this->m_radius = radius;
-	this->m_height = height;
-	this->m_attackRadius = attackRadius;
-	this->m_attackSpeed = attackSpeed;
-	this->m_damage = damage;
+	const LevelInfo *levelInfo = TowerInfo::getTowerInfo(towerType)->getLevelInfo(0);
+	this->m_radius = levelInfo->getRadius();
+	this->m_height = levelInfo->getHeight();
+	this->m_attackRadius = static_cast<float>(levelInfo->getAttackRadius());
+	this->m_attackSpeed = 1.0f / 20.0f * static_cast<float>(levelInfo->getAttackSpeed());
+	this->m_damage = static_cast<float>(levelInfo->getDamage());
 	this->m_towerType = towerType;
-	this->m_attackTick = static_cast<unsigned long>(1.0 / attackSpeed);
+	this->m_attackTick = static_cast<unsigned long>(1.0 / this->m_attackSpeed);
 	this->m_placed = false;
 	this->m_ticksAlive = 0;
 }

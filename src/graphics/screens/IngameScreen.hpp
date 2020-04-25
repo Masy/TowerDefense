@@ -39,37 +39,45 @@ private:
 	 */
 	Label *m_roundLabel;
 	/**
-	 * A pointer to the shop.
+	 * A pointer to the shop background.
 	 */
 	Image *m_shopBackground;
 	/**
-	 * A pointer to the tower buy button.
+	 * A pointer to the canon buy button.
 	 */
-	ImageButton *m_buyTowerButton;
+	ImageButton *m_buyCanonButton;
 	/**
-	 * A pointer to the tower coin icon.
+	 * A pointer to the canon coin icon.
 	 */
-	Image *m_towerCoinIcon;
+	Image *m_canonCoinIcon;
 	/**
-	 * A pointer to the tower coin label.
+	 * A pointer to the canon coin label.
 	 */
-	Label *m_towerCoinLabel;
+	Label *m_canonCoinLabel;
 	/**
-	 * A pointer to the tower attack range icon.
+	 * A pointer to the canon attack range icon.
 	 */
-	Image *m_towerAttackRangeIcon;
+	Image *m_canonAttackRangeIcon;
 	/**
-	 * A pointer to the tower attack range label.
+	 * A pointer to the canon attack range label.
 	 */
-	Label *m_towerAttackRangeLabel;
+	Label *m_canonAttackRangeLabel;
 	/**
-	 * A pointer to the tower attack speed icon.
+	 * A pointer to the canon damage icon.
 	 */
-	Image *m_towerAttackSpeedIcon;
+	Image *m_canonDamageIcon;
 	/**
-	 * A pointer to the tower attack speed label.
+	 * A pointer to the canon damage label.
 	 */
-	Label *m_towerAttackSpeedLabel;
+	Label *m_canonDamageLabel;
+	/**
+	 * A pointer to the canon attack speed icon.
+	 */
+	Image *m_canonAttackSpeedIcon;
+	/**
+	 * A pointer to the canon attack speed label.
+	 */
+	Label *m_canonAttackSpeedLabel;
 
 public:
 	/**
