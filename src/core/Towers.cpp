@@ -148,7 +148,7 @@ const LevelInfo *TowerInfo::getLevelInfo(const unsigned int level) const
 
 void TowerInfo::registerTowerInfo(const TowerType &towerType, const TowerInfo *towerInfo)
 {
-	m_towers.insert(std::make_pair(towerType, towerInfo));
+	m_towers[towerType] = towerInfo;
 }
 
 const TowerInfo *TowerInfo::getTowerInfo(const TowerType &towerType)

@@ -36,9 +36,9 @@ private:
 	 */
 	Label *m_coinLabel;
 	/**
-	 * A pointer to the round label.
+	 * A pointer to the wave label.
 	 */
-	Label *m_roundLabel;
+	Label *m_waveLabel;
 	/**
 	 * A pointer to the shop background.
 	 */
@@ -136,6 +136,10 @@ private:
 	 * A pointer to the upgrade button.
 	 */
 	ImageButton *m_upgradeTowerButton;
+	/**
+	 * A pointer to the start wave button.
+	 */
+	ImageButton *m_startWaveButton;
 
 	/**
 	 * Sets the visibility of all elements related to the upgrade area.
@@ -178,6 +182,10 @@ public:
 	 * @param selectedTower A pointer to the selected tower.
 	 */
 	void setSelectedTower(TowerEntity *selectedTower);
+
+	void setStartWaveButtonEnabled(bool enabled);
+
+	void setCurrentWave(unsigned int currentWave);
 };
 
 #endif //TALESOFCATVENTURE_INGAMESCREEN_HPP

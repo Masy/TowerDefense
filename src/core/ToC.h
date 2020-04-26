@@ -53,12 +53,22 @@ public:
 	/**
 	 * Loads the tower defense map.
 	 */
-	void loadMap();
+	void loadMap() const;
 
 	/**
 	 * Initializes the tower information.
 	 */
-	void initTowers();
+	void initTowers() const;
+
+	/**
+	 * Initializes the enemies.
+	 */
+	void initEnemies() const;
+
+	/**
+	 * Initializes the waves.
+	 */
+	void initWaves() const;
 
 	/**
 	 * The initialisation callback of the OpenGL thread.

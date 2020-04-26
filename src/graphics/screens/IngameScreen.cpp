@@ -19,7 +19,7 @@ IngameScreen::IngameScreen()
 	this->m_coinIcon = nullptr;
 	this->m_healthLabel = nullptr;
 	this->m_coinLabel = nullptr;
-	this->m_roundLabel = nullptr;
+	this->m_waveLabel = nullptr;
 	this->m_shopBackground = nullptr;
 	this->m_buyCanonButton = nullptr;
 	this->m_canonCoinIcon = nullptr;
@@ -46,6 +46,8 @@ IngameScreen::IngameScreen()
 	this->m_selectedTowerPriceLabel = nullptr;
 	this->m_upgradeTowerButton = nullptr;
 
+	this->m_startWaveButton = nullptr;
+
 	ScreenRegistry::registerScreen(this);
 }
 
@@ -55,7 +57,7 @@ IngameScreen::~IngameScreen()
 	delete this->m_coinIcon;
 	delete this->m_healthLabel;
 	delete this->m_coinLabel;
-	delete this->m_roundLabel;
+	delete this->m_waveLabel;
 	delete this->m_shopBackground;
 	delete this->m_buyCanonButton;
 	delete this->m_canonCoinIcon;
@@ -80,6 +82,7 @@ IngameScreen::~IngameScreen()
 	delete this->m_selectedTowerPriceIcon;
 	delete this->m_selectedTowerPriceLabel;
 	delete this->m_upgradeTowerButton;
+	delete this->m_startWaveButton;
 }
 
 void healthLabelUpdateCallback(Element *element, const unsigned long currentTime, const unsigned long currentTick)
@@ -102,7 +105,7 @@ void buyTowerButtonInteractHandler(Element *element)
 {
 	if (EngineThread::getInstance()->getGameState() == CEDAR_STATE_RUNNING)
 	{
-		dynamic_cast<IngameScreen*>(ScreenRegistry::getScreen("ingameScreen"))->setSelectedTower(nullptr);
+		dynamic_cast<IngameScreen *>(ScreenRegistry::getScreen("ingameScreen"))->setSelectedTower(nullptr);
 
 		TDMap *map = dynamic_cast<TDMap *>(EngineThread::getInstance()->getLoadedScene());
 
@@ -129,6 +132,13 @@ void upgradeTowerButtonInteractHandler(Element *element)
 	selectedTower->setLevel(selectedTower->getLevel() + 1);
 	map->getPlayer()->addCoins(-TowerInfo::getTowerInfo(selectedTower->getTowerType())->getLevelInfo(selectedTower->getLevel())->getPrice());
 	dynamic_cast<IngameScreen *>(ScreenRegistry::getScreen("ingameScreen"))->setSelectedTower(selectedTower);
+}
+
+void startWaveButtonInteractHandler(Element *element)
+{
+	TDMap *map = dynamic_cast<TDMap *>(EngineThread::getInstance()->getLoadedScene());
+	map->startNextWave();
+	element->setEnabled(false);
 }
 
 void IngameScreen::init(const int width, const int height, const int scale)
@@ -175,7 +185,7 @@ void IngameScreen::init(const int width, const int height, const int scale)
 	this->m_healthLabel->setUpdateCallback(healthLabelUpdateCallback);
 	this->m_coinLabel = new Label(25.0f * guiScale, 27.0f * guiScale, zIndex++, "0", font_bold, cloudWhite, CEDAR_ALIGNMENT_TOP | CEDAR_ALIGNMENT_LEFT);
 	this->m_coinLabel->setUpdateCallback(coinLabelUpdateCallback);
-	this->m_roundLabel = new Label(5.0f * guiScale, static_cast<float>(height) - (5.0f * guiScale), zIndex++, "Round: 0/50", font_bold, cloudWhite, alignmentBL);
+	this->m_waveLabel = new Label(5.0f * guiScale, static_cast<float>(height) - (5.0f * guiScale), zIndex++, "Wave: 0/" + std::to_string(WaveInfo::getWaveCount()), font_bold, cloudWhite, alignmentBL);
 
 	this->m_shopBackground = new Image(static_cast<float>(width) - (108.0f * guiScale), 0.0f, zIndex++, 108.0f * guiScale, 228.0f * guiScale,
 									   guiTexture, shopBackgroundUv, CEDAR_ALIGNMENT_TOP | CEDAR_ALIGNMENT_LEFT);
@@ -248,18 +258,25 @@ void IngameScreen::init(const int width, const int height, const int scale)
 	this->m_upgradeTowerButton = new ImageButton(static_cast<float>(width) - (102.0f * guiScale), 198.0f * guiScale, zIndex,
 												 96.0f * guiScale, 24.0f * guiScale, guiTexture, buttonDefaultUV, buttonHoveredUV, buttonPressedUV,
 												 "Upgrade", font, cloudWhite, cloudWhite, gray, CEDAR_ALIGNMENT_TOP | CEDAR_ALIGNMENT_LEFT);
-	this->m_upgradeTowerButton->setDefaultCaptionOffset(- 1.0f - (2.0f * guiScale));
-	this->m_upgradeTowerButton->setHoveredCaptionOffset(- 1.0f - (2.0f * guiScale));
-	this->m_upgradeTowerButton->setPressedCaptionOffset(- 1.0f);
+	this->m_upgradeTowerButton->setDefaultCaptionOffset(-1.0f - (2.0f * guiScale));
+	this->m_upgradeTowerButton->setHoveredCaptionOffset(-1.0f - (2.0f * guiScale));
+	this->m_upgradeTowerButton->setPressedCaptionOffset(-1.0f);
 	this->m_upgradeTowerButton->setInteractCallback(upgradeTowerButtonInteractHandler);
 
 	this->setUpgradeAreaVisible(false);
+
+	Vector4f startButtonDefaultUV(108.0f * pixelSize, 0.0f, 130.0f * pixelSize, 24.0f * pixelSize);
+	Vector4f startButtonHoveredUV(130.0f * pixelSize, 0.0f, 152.0f * pixelSize, 24.0f * pixelSize);
+	Vector4f startButtonPressedUV(152.0f * pixelSize, 0.0f, 174.0f * pixelSize, 24.0f * pixelSize);
+	this->m_startWaveButton = new ImageButton(static_cast<float>(width) - (26.0f * guiScale), static_cast<float>(height) - (28.0f * guiScale), zIndex++,
+											  22.0f * guiScale, 24.0f * guiScale, guiTexture, startButtonDefaultUV, startButtonHoveredUV, startButtonPressedUV);
+	this->m_startWaveButton->setInteractCallback(startWaveButtonInteractHandler);
 
 	this->addElement(this->m_healthIcon);
 	this->addElement(this->m_coinIcon);
 	this->addElement(this->m_healthLabel);
 	this->addElement(this->m_coinLabel);
-	this->addElement(this->m_roundLabel);
+	this->addElement(this->m_waveLabel);
 	this->addElement(this->m_shopBackground);
 	this->addElement(this->m_buyCanonButton);
 	this->addElement(this->m_canonCoinIcon);
@@ -284,6 +301,7 @@ void IngameScreen::init(const int width, const int height, const int scale)
 	this->addElement(this->m_selectedTowerPriceIcon);
 	this->addElement(this->m_selectedTowerPriceLabel);
 	this->addElement(this->m_upgradeTowerButton);
+	this->addElement(this->m_startWaveButton);
 	this->setVisibility(true);
 }
 
@@ -377,4 +395,13 @@ void IngameScreen::setSelectedTower(TowerEntity *selectedTower)
 	{
 		this->setUpgradeAreaVisible(false);
 	}
+}
+
+void IngameScreen::setStartWaveButtonEnabled(const bool enabled)
+{
+	this->m_startWaveButton->setEnabled(enabled);
+}
+
+void IngameScreen::setCurrentWave(const unsigned int currentWave) {
+	this->m_waveLabel->setText("Wave: " + std::to_string(currentWave) + "/" + std::to_string(WaveInfo::getWaveCount()));
 }

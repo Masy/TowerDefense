@@ -31,7 +31,7 @@ void TowerEntity::update(const unsigned long currentTime, const unsigned long ti
 	{
 		TDMap *map = dynamic_cast<TDMap *>(cedar::EngineThread::getInstance()->getLoadedScene());
 
-		float radiusSquared = this->m_attackRadius * this->m_attackRadius;
+		float radiusSquared = static_cast<float>(this->m_attackRadius * this->m_attackRadius);
 
 		auto it = map->getEntityManager()->getEntities()->begin();
 		for (const auto &pair : *map->getEntityManager()->getEntities())
@@ -42,10 +42,10 @@ void TowerEntity::update(const unsigned long currentTime, const unsigned long ti
 				if (this->m_ticksAlive % this->m_attackTick == 0)
 				{
 					EnemyEntity *enemy = dynamic_cast<EnemyEntity *>(entity.get());
-					enemy->damage(static_cast<float>(this->m_damage));
-					if (enemy->getHealth() == 0.0f)
+					enemy->damage(this->m_damage);
+					if (enemy->getHealth() == 0)
 					{
-						map->getPlayer()->addCoins(1);
+						map->getPlayer()->addCoins(enemy->getMaxHealth());
 					}
 				}
 				break;
