@@ -42,7 +42,7 @@ public:
 	 *
 	 * @param width The width of the window.
 	 * @param height The height of the window.
-	 * @param guiScale The scale of the gui.
+	 * @param scale The scale of the gui.
 	 */
 	void init(int width, int height, int scale);
 };

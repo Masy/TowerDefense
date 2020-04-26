@@ -219,6 +219,13 @@ void TDMap::update(const unsigned long currentTime, const unsigned long tickCoun
 		else if (this->m_entityManager->getEntities()->empty())
 		{
 			dynamic_cast<IngameScreen *>(ScreenRegistry::getScreen("ingameScreen"))->setStartWaveButtonEnabled(true);
+			if (this->m_currentWave == WaveInfo::getWaveCount())
+			{
+				IngameScreen *ingameScreen = dynamic_cast<IngameScreen*>(ScreenRegistry::getScreen("ingameScreen"));
+				ingameScreen->setSelectedTower(nullptr);
+				ingameScreen->setVisibility(false);
+				ScreenRegistry::getScreen("winScreen")->setVisibility(true);
+			}
 		}
 	}
 }

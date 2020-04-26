@@ -3,6 +3,7 @@
 //
 
 #include <GameOverScreen.hpp>
+#include <WinScreen.hpp>
 #include "cedar/TextureRegistry.hpp"
 #include "cedar/ScreenRegistry.hpp"
 #include "cedar/MeshCollider2D.hpp"
@@ -398,6 +399,9 @@ void ToC::initCallback(MasterRenderer *masterRenderer)
 
 	GameOverScreen *gameOverScreen = new GameOverScreen();
 	gameOverScreen->init(window->getWidth(), window->getHeight(), 3);
+
+	WinScreen *winScreen = new WinScreen();
+	winScreen->init(window->getWidth(), window->getHeight(), 3);
 
 	DebugScreen *debugScreen = new DebugScreen();
 	debugScreen->init(window->getWidth(), window->getHeight(), 2);
