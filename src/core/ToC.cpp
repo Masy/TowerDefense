@@ -2,6 +2,8 @@
 // Created by masy on 27.01.20.
 //
 
+#include <GameOverScreen.hpp>
+#include <WinScreen.hpp>
 #include "cedar/TextureRegistry.hpp"
 #include "cedar/ScreenRegistry.hpp"
 #include "cedar/MeshCollider2D.hpp"
@@ -138,7 +140,7 @@ void ToC::loadMap() const
 	pathFile.read(reinterpret_cast<char *>(pathPoints), vertexDataSize);
 	pathFile.close();
 
-	Player *player = new Player(100, 225);
+	Player *player = new Player(20, 225);
 	TDMap *map = new TDMap(Vector3f(0.0f, 0.0f, 0.0f), player, terrainModel, noBuildZone, vertexCount, pathPoints);
 	EngineThread::getInstance()->loadScene(map);
 }
@@ -394,6 +396,12 @@ void ToC::initCallback(MasterRenderer *masterRenderer)
 
 	IngameScreen *ingameScreen = new IngameScreen();
 	ingameScreen->init(window->getWidth(), window->getHeight(), 3);
+
+	GameOverScreen *gameOverScreen = new GameOverScreen();
+	gameOverScreen->init(window->getWidth(), window->getHeight(), 3);
+
+	WinScreen *winScreen = new WinScreen();
+	winScreen->init(window->getWidth(), window->getHeight(), 3);
 
 	DebugScreen *debugScreen = new DebugScreen();
 	debugScreen->init(window->getWidth(), window->getHeight(), 2);

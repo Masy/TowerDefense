@@ -34,6 +34,10 @@ TDMap::~TDMap()
 	delete this->m_player;
 	delete this->m_entityManager;
 	delete[] this->m_pathPoints;
+	for (auto towerEntity : this->m_towers)
+		delete towerEntity;
+	this->m_towers.clear();
+
 	delete this->m_selectedTower;
 	delete this->m_transformationMatrix;
 }
@@ -170,41 +174,60 @@ TowerEntity *TDMap::getTower(const cedar::Vector3f &cameraOrigin, const cedar::V
 
 void TDMap::update(const unsigned long currentTime, const unsigned long tickCount)
 {
-	Scene::update(currentTime, tickCount);
-
-	for (TowerEntity *tower : this->m_towers)
+	if (this->m_waveEnemyIndex != 0 && this->m_player->getHealth() <= 0)
 	{
-		tower->update(currentTime, tickCount);
+		this->m_currentWaveInfo = nullptr;
+		this->m_waveEnemyIndex = 0;
+		IngameScreen *ingameScreen = dynamic_cast<IngameScreen*>(ScreenRegistry::getScreen("ingameScreen"));
+		ingameScreen->setSelectedTower(nullptr);
+		ingameScreen->setVisibility(false);
+		ScreenRegistry::getScreen("gameOverScreen")->setVisibility(true);
 	}
 
-	// If the selected tower is already placed it was updated by the for loop
-	if (this->m_selectedTower && !this->m_selectedTower->isPlaced())
-		this->m_selectedTower->update(currentTime, tickCount);
-
-	if (this->m_currentWaveInfo != nullptr)
+	if (this->m_player->getHealth() > 0)
 	{
-		if (this->m_waveEnemyIndex < this->m_currentWaveInfo->getEnemyCount())
+		Scene::update(currentTime, tickCount);
+
+		for (TowerEntity *tower : this->m_towers)
 		{
-			if (tickCount % 5 == 0)
+			tower->update(currentTime, tickCount);
+		}
+
+		// If the selected tower is already placed it was updated by the for loop
+		if (this->m_selectedTower && !this->m_selectedTower->isPlaced())
+			this->m_selectedTower->update(currentTime, tickCount);
+
+		if (this->m_currentWaveInfo != nullptr)
+		{
+			if (this->m_waveEnemyIndex < this->m_currentWaveInfo->getEnemyCount())
 			{
-				EnemyType nextEnemy = this->m_currentWaveInfo->getEnemies()[this->m_waveEnemyIndex++];
-				if (nextEnemy != NONE)
+				if (tickCount % 5 == 0)
 				{
-					EnemyEntity *enemy = new EnemyEntity(cedar::Entity::nextEntityId(), this->m_pathPointCount, this->m_pathPoints, nextEnemy);
-					this->m_entityManager->addEntity(enemy);
+					EnemyType nextEnemy = this->m_currentWaveInfo->getEnemies()[this->m_waveEnemyIndex++];
+					if (nextEnemy != NONE)
+					{
+						EnemyEntity *enemy = new EnemyEntity(cedar::Entity::nextEntityId(), this->m_pathPointCount, this->m_pathPoints, nextEnemy);
+						this->m_entityManager->addEntity(enemy);
+					}
 				}
 			}
+			else
+			{
+				this->m_currentWaveInfo = nullptr;
+			}
 		}
-		else
+		else if (this->m_entityManager->getEntities()->empty())
 		{
-			this->m_currentWaveInfo = nullptr;
+			dynamic_cast<IngameScreen *>(ScreenRegistry::getScreen("ingameScreen"))->setStartWaveButtonEnabled(true);
+			if (this->m_currentWave == WaveInfo::getWaveCount())
+			{
+				IngameScreen *ingameScreen = dynamic_cast<IngameScreen*>(ScreenRegistry::getScreen("ingameScreen"));
+				ingameScreen->setSelectedTower(nullptr);
+				ingameScreen->setVisibility(false);
+				ScreenRegistry::getScreen("winScreen")->setVisibility(true);
+			}
 		}
 	}
-	else if (this->m_entityManager->getEntities()->empty())
-	{
-		dynamic_cast<IngameScreen*>(ScreenRegistry::getScreen("ingameScreen"))->setStartWaveButtonEnabled(true);
-	}
-
 }
 
 void TDMap::render(const unsigned long currentTime, const unsigned long tickCount, const cedar::ShaderProgram *shader)
@@ -316,8 +339,24 @@ void TDMap::startNextWave()
 		this->m_waveEnemyIndex = 0;
 		this->m_currentWave++;
 		this->m_currentWaveInfo = WaveInfo::getWaveInfo(this->m_currentWave);
-		dynamic_cast<IngameScreen*>(ScreenRegistry::getScreen("ingameScreen"))->setCurrentWave(this->m_currentWave);
+		dynamic_cast<IngameScreen *>(ScreenRegistry::getScreen("ingameScreen"))->setCurrentWave(this->m_currentWave);
 	}
+}
+
+void TDMap::restart()
+{
+	this->m_currentWave = 0;
+	this->m_currentWaveInfo = nullptr;
+	this->m_waveEnemyIndex = 0;
+	dynamic_cast<IngameScreen *>(ScreenRegistry::getScreen("ingameScreen"))->setCurrentWave(this->m_currentWave);
+	this->m_player->setCoins(225);
+	this->m_player->setHealth(20);
+
+	this->m_selectedTower = nullptr;
+	for (auto towerEntity : this->m_towers)
+		delete towerEntity;
+	this->m_towers.clear();
+	this->m_entityManager->cleanup();
 }
 
 Player *TDMap::getPlayer() const
