@@ -50,6 +50,8 @@ public:
 
 	void startNextWave();
 
+	void restart();
+
 	[[nodiscard]] Player *getPlayer() const;
 };
 
