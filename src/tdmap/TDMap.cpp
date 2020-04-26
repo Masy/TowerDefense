@@ -5,6 +5,8 @@
 #include <limits>
 #include <EnemyEntity.h>
 #include <cedar/ModelRegistry.hpp>
+#include <IngameScreen.hpp>
+#include <cedar/ScreenRegistry.hpp>
 
 #include "TDMap.h"
 #include "cedar/Distance2D.hpp"
@@ -22,6 +24,9 @@ TDMap::TDMap(const cedar::Vector3f &position, Player *player, cedar::Model *mode
 	this->m_models.push_back(model);
 	this->m_selectedTower = nullptr;
 	this->m_transformationMatrix = new cedar::Matrix4f();
+	this->m_currentWave = 0;
+	this->m_currentWaveInfo = nullptr;
+	this->m_waveEnemyIndex = 0;
 }
 
 TDMap::~TDMap()
@@ -176,11 +181,28 @@ void TDMap::update(const unsigned long currentTime, const unsigned long tickCoun
 	if (this->m_selectedTower && !this->m_selectedTower->isPlaced())
 		this->m_selectedTower->update(currentTime, tickCount);
 
-	if (tickCount % 15 == 0)
+	if (this->m_currentWaveInfo != nullptr)
 	{
-		EnemyEntity *enemy = new EnemyEntity(cedar::Entity::nextEntityId(), this->m_pathPointCount, this->m_pathPoints, 1.0f, ENEMY_LEVEL1);
-		enemy->setModel(cedar::ModelRegistry::getModel("enemy"));
-		this->m_entityManager->addEntity(enemy);
+		if (this->m_waveEnemyIndex < this->m_currentWaveInfo->getEnemyCount())
+		{
+			if (tickCount % 5 == 0)
+			{
+				EnemyType nextEnemy = this->m_currentWaveInfo->getEnemies()[this->m_waveEnemyIndex++];
+				if (nextEnemy != NONE)
+				{
+					EnemyEntity *enemy = new EnemyEntity(cedar::Entity::nextEntityId(), this->m_pathPointCount, this->m_pathPoints, nextEnemy);
+					this->m_entityManager->addEntity(enemy);
+				}
+			}
+		}
+		else
+		{
+			this->m_currentWaveInfo = nullptr;
+		}
+	}
+	else if (this->m_entityManager->getEntities()->empty())
+	{
+		dynamic_cast<IngameScreen*>(ScreenRegistry::getScreen("ingameScreen"))->setStartWaveButtonEnabled(true);
 	}
 
 }
@@ -227,7 +249,6 @@ void TDMap::render(const unsigned long currentTime, const unsigned long tickCoun
 		}
 	}
 
-	shader->setUniform3f(tintUniform, 1.0f, 1.0f, 1.0f);
 	auto it = this->m_entityManager->getEntities()->cbegin();
 	while (it != this->m_entityManager->getEntities()->cend())
 	{
@@ -237,6 +258,7 @@ void TDMap::render(const unsigned long currentTime, const unsigned long tickCoun
 			position = this->m_position + it->second->getLerpedPosition(currentTime);
 			this->m_transformationMatrix->translation(&position);
 			shader->setUniform4x4f(transformationUniform, *this->m_transformationMatrix);
+			shader->setUniform3f(tintUniform, dynamic_cast<EnemyEntity *>(it->second.get())->getTint());
 			model->render();
 		}
 
@@ -285,6 +307,17 @@ unsigned int TDMap::getPathPointCount() const
 const cedar::Vector3f *TDMap::getPathPoints() const
 {
 	return this->m_pathPoints;
+}
+
+void TDMap::startNextWave()
+{
+	if (this->m_currentWave < WaveInfo::getWaveCount())
+	{
+		this->m_waveEnemyIndex = 0;
+		this->m_currentWave++;
+		this->m_currentWaveInfo = WaveInfo::getWaveInfo(this->m_currentWave);
+		dynamic_cast<IngameScreen*>(ScreenRegistry::getScreen("ingameScreen"))->setCurrentWave(this->m_currentWave);
+	}
 }
 
 Player *TDMap::getPlayer() const

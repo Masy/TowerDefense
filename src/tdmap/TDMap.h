@@ -9,18 +9,25 @@
 #include "cedar/MeshCollider2D.hpp"
 #include "TowerEntity.h"
 #include "Player.hpp"
+#include "Waves.hpp"
 
-class TDMap : public cedar::Scene
+using namespace cedar;
+
+class TDMap : public Scene
 {
 private:
 	Player *m_player;
-	cedar::MeshCollider2D *m_noBuildZone;
+	MeshCollider2D *m_noBuildZone;
 	unsigned int m_pathPointCount;
-	const cedar::Vector3f *m_pathPoints;
+	const Vector3f *m_pathPoints;
 
 	std::vector<TowerEntity*> m_towers;
 	TowerEntity *m_selectedTower;
-	cedar::Matrix4f *m_transformationMatrix;
+	Matrix4f *m_transformationMatrix;
+
+	int m_currentWave;
+	const WaveInfo *m_currentWaveInfo;
+	int m_waveEnemyIndex;
 
 public:
 	TDMap(const cedar::Vector3f &position, Player *player, cedar::Model *model, cedar::MeshCollider2D *noBuildZone, unsigned int pathPointCount, const cedar::Vector3f *pathPoints);
@@ -40,6 +47,8 @@ public:
 
 	[[nodiscard]] unsigned int getPathPointCount() const;
 	[[nodiscard]] const cedar::Vector3f *getPathPoints() const;
+
+	void startNextWave();
 
 	[[nodiscard]] Player *getPlayer() const;
 };

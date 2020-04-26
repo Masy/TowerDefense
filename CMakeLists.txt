@@ -33,7 +33,7 @@ add_executable(TalesOfCatventure
 		src/graphics/screens/DebugScreen.hpp
 		src/graphics/screens/DebugScreen.cpp
 		src/graphics/screens/EscapeScreen.hpp
-		src/graphics/screens/EscapeScreen.cpp src/core/Towers.hpp src/core/Towers.cpp)
+		src/graphics/screens/EscapeScreen.cpp src/core/Towers.hpp src/core/Towers.cpp src/core/Enemies.hpp src/core/Enemies.cpp src/core/Waves.hpp src/core/Waves.cpp)
 
 target_include_directories(TalesOfCatventure PUBLIC
 		cedar/include

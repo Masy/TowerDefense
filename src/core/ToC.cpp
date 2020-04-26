@@ -22,6 +22,8 @@
 #include "IngameScreen.hpp"
 #include "DebugScreen.hpp"
 #include "EscapeScreen.hpp"
+#include "Enemies.hpp"
+#include "Waves.hpp"
 
 ToC::ToC()
 {
@@ -34,15 +36,15 @@ ToC *ToC::getInstance()
 	return instance;
 }
 
-void ToC::loadMap()
+void ToC::loadMap() const
 {
 	unsigned char bitmask;
 	Model *enemyModel = cedar::ModelRegistry::loadBMFModel("enemy", "resources/models/enemy.bmf", &bitmask);
 	glBindVertexArray(enemyModel->getVertexArrayId());
 	glBindBuffer(GL_ARRAY_BUFFER, enemyModel->getVertexBufferId());
 	glVertexAttribPointer(0, 3, GL_FLOAT, false, sizeof(float) * 8, nullptr); // vertex position
-	glVertexAttribPointer(1, 2, GL_FLOAT, false, sizeof(float) * 8, (const void*) 12); // vertex uv
-	glVertexAttribPointer(2, 3, GL_FLOAT, false, sizeof(float) * 8, (const void*) 20); // vertex normal
+	glVertexAttribPointer(1, 2, GL_FLOAT, false, sizeof(float) * 8, (const void *) 12); // vertex uv
+	glVertexAttribPointer(2, 3, GL_FLOAT, false, sizeof(float) * 8, (const void *) 20); // vertex normal
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);
 
@@ -53,8 +55,8 @@ void ToC::loadMap()
 	glBindVertexArray(terrainModel->getVertexArrayId());
 	glBindBuffer(GL_ARRAY_BUFFER, terrainModel->getVertexBufferId());
 	glVertexAttribPointer(0, 3, GL_FLOAT, false, sizeof(float) * 8, nullptr); // vertex position
-	glVertexAttribPointer(1, 2, GL_FLOAT, false, sizeof(float) * 8, (const void*) 12); // vertex uv
-	glVertexAttribPointer(2, 3, GL_FLOAT, false, sizeof(float) * 8, (const void*) 20); // vertex normal
+	glVertexAttribPointer(1, 2, GL_FLOAT, false, sizeof(float) * 8, (const void *) 12); // vertex uv
+	glVertexAttribPointer(2, 3, GL_FLOAT, false, sizeof(float) * 8, (const void *) 20); // vertex normal
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);
 
@@ -93,8 +95,8 @@ void ToC::loadMap()
 
 	Vector3f *vertexData = new Vector3f[vertexCount];
 	unsigned int *indexData = new unsigned int[indexCount];
-	collisionFile.read(reinterpret_cast<char*>(vertexData), vertexDataSize);
-	collisionFile.read(reinterpret_cast<char*>(indexData), indexDataSize);
+	collisionFile.read(reinterpret_cast<char *>(vertexData), vertexDataSize);
+	collisionFile.read(reinterpret_cast<char *>(indexData), indexDataSize);
 	collisionFile.close();
 
 	Vector2f *vertices = new Vector2f[vertexCount];
@@ -102,7 +104,7 @@ void ToC::loadMap()
 	{
 		vertices[n] = Vector2f(vertexData[n].x, vertexData[n].z);
 	}
-	cedar::Triangle *triangles = reinterpret_cast<Triangle*>(indexData);
+	cedar::Triangle *triangles = reinterpret_cast<Triangle *>(indexData);
 	delete[] vertexData;
 	MeshCollider2D *noBuildZone = new MeshCollider2D(vertices, indexCount / 3, triangles);
 
@@ -133,7 +135,7 @@ void ToC::loadMap()
 		throw XException("Corrupted collision path!");
 
 	Vector3f *pathPoints = new Vector3f[vertexCount];
-	pathFile.read(reinterpret_cast<char*>(pathPoints), vertexDataSize);
+	pathFile.read(reinterpret_cast<char *>(pathPoints), vertexDataSize);
 	pathFile.close();
 
 	Player *player = new Player(100, 225);
@@ -141,14 +143,15 @@ void ToC::loadMap()
 	EngineThread::getInstance()->loadScene(map);
 }
 
-void ToC::initTowers() {
+void ToC::initTowers() const
+{
 	unsigned char bitmask;
 	Model *towerModel = cedar::ModelRegistry::loadBMFModel("towerCanon_level0", "resources/models/towerCanon_level0.bmf", &bitmask);
 	glBindVertexArray(towerModel->getVertexArrayId());
 	glBindBuffer(GL_ARRAY_BUFFER, towerModel->getVertexBufferId());
 	glVertexAttribPointer(0, 3, GL_FLOAT, false, sizeof(float) * 8, nullptr); // vertex position
-	glVertexAttribPointer(1, 2, GL_FLOAT, false, sizeof(float) * 8, (const void*) 12); // vertex uv
-	glVertexAttribPointer(2, 3, GL_FLOAT, false, sizeof(float) * 8, (const void*) 20); // vertex normal
+	glVertexAttribPointer(1, 2, GL_FLOAT, false, sizeof(float) * 8, (const void *) 12); // vertex uv
+	glVertexAttribPointer(2, 3, GL_FLOAT, false, sizeof(float) * 8, (const void *) 20); // vertex normal
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);
 
@@ -156,8 +159,8 @@ void ToC::initTowers() {
 	glBindVertexArray(towerModel->getVertexArrayId());
 	glBindBuffer(GL_ARRAY_BUFFER, towerModel->getVertexBufferId());
 	glVertexAttribPointer(0, 3, GL_FLOAT, false, sizeof(float) * 8, nullptr); // vertex position
-	glVertexAttribPointer(1, 2, GL_FLOAT, false, sizeof(float) * 8, (const void*) 12); // vertex uv
-	glVertexAttribPointer(2, 3, GL_FLOAT, false, sizeof(float) * 8, (const void*) 20); // vertex normal
+	glVertexAttribPointer(1, 2, GL_FLOAT, false, sizeof(float) * 8, (const void *) 12); // vertex uv
+	glVertexAttribPointer(2, 3, GL_FLOAT, false, sizeof(float) * 8, (const void *) 20); // vertex normal
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);
 
@@ -165,8 +168,8 @@ void ToC::initTowers() {
 	glBindVertexArray(towerModel->getVertexArrayId());
 	glBindBuffer(GL_ARRAY_BUFFER, towerModel->getVertexBufferId());
 	glVertexAttribPointer(0, 3, GL_FLOAT, false, sizeof(float) * 8, nullptr); // vertex position
-	glVertexAttribPointer(1, 2, GL_FLOAT, false, sizeof(float) * 8, (const void*) 12); // vertex uv
-	glVertexAttribPointer(2, 3, GL_FLOAT, false, sizeof(float) * 8, (const void*) 20); // vertex normal
+	glVertexAttribPointer(1, 2, GL_FLOAT, false, sizeof(float) * 8, (const void *) 12); // vertex uv
+	glVertexAttribPointer(2, 3, GL_FLOAT, false, sizeof(float) * 8, (const void *) 20); // vertex normal
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);
 
@@ -174,8 +177,8 @@ void ToC::initTowers() {
 	glBindVertexArray(towerModel->getVertexArrayId());
 	glBindBuffer(GL_ARRAY_BUFFER, towerModel->getVertexBufferId());
 	glVertexAttribPointer(0, 3, GL_FLOAT, false, sizeof(float) * 8, nullptr); // vertex position
-	glVertexAttribPointer(1, 2, GL_FLOAT, false, sizeof(float) * 8, (const void*) 12); // vertex uv
-	glVertexAttribPointer(2, 3, GL_FLOAT, false, sizeof(float) * 8, (const void*) 20); // vertex normal
+	glVertexAttribPointer(1, 2, GL_FLOAT, false, sizeof(float) * 8, (const void *) 12); // vertex uv
+	glVertexAttribPointer(2, 3, GL_FLOAT, false, sizeof(float) * 8, (const void *) 20); // vertex normal
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);
 
@@ -189,11 +192,187 @@ void ToC::initTowers() {
 	TowerInfo::registerTowerInfo(TOWER_CANON, new TowerInfo("Canon", levels, canonLevelInfo));
 }
 
+void ToC::initEnemies() const
+{
+	EnemyInfo::registerEnemyInfo(LEVEL1, new EnemyInfo(1, Vector3f(0xD3 / 255.0f, 0x50 / 255.0f, 0x50 / 255.0f)));
+	EnemyInfo::registerEnemyInfo(LEVEL2, new EnemyInfo(2, Vector3f(0x6F / 255.0f, 0xD3 / 255.0f, 0x50 / 255.0f)));
+	EnemyInfo::registerEnemyInfo(LEVEL3, new EnemyInfo(3, Vector3f(0x50 / 255.0f, 0x8C / 255.0f, 0xD3 / 255.0f)));
+	EnemyInfo::registerEnemyInfo(LEVEL4, new EnemyInfo(4, Vector3f(0xD3 / 255.0f, 0xCF / 255.0f, 0x50 / 255.0f)));
+	EnemyInfo::registerEnemyInfo(LEVEL5, new EnemyInfo(5, Vector3f(0xD3 / 255.0f, 0x50 / 255.0f, 0xC3 / 255.0f)));
+	EnemyInfo::registerEnemyInfo(LEVEL6, new EnemyInfo(8, Vector3f(0x72 / 255.0f, 0x50 / 255.0f, 0xD3 / 255.0f)));
+	EnemyInfo::registerEnemyInfo(LEVEL7, new EnemyInfo(10, Vector3f(0x50 / 255.0f, 0xD3 / 255.0f, 0xAE / 255.0f)));
+	EnemyInfo::registerEnemyInfo(LEVEL8, new EnemyInfo(15, Vector3f(0xD7 / 255.0f, 0xD6 / 255.0f, 0xCA / 255.0f)));
+	EnemyInfo::registerEnemyInfo(LEVEL9, new EnemyInfo(20, Vector3f(0x2A / 255.0f, 0x28 / 255.0f, 0x27 / 255.0f)));
+}
+
+void ToC::initWaves() const
+{
+	unsigned int enemyCount = 40;
+	EnemyType *enemies = new EnemyType[enemyCount]{
+			LEVEL1, NONE, NONE, NONE,
+			LEVEL1, NONE, NONE, NONE,
+			LEVEL1, NONE, NONE, NONE,
+			LEVEL1, NONE, NONE, NONE,
+			LEVEL1, NONE, NONE, NONE,
+			LEVEL1, NONE, NONE, NONE,
+			LEVEL1, NONE, NONE, NONE,
+			LEVEL1, NONE, NONE, NONE,
+			LEVEL1, NONE, NONE, NONE,
+			LEVEL1, NONE, NONE, NONE
+	};
+	WaveInfo::registerWaveInfo(1, new WaveInfo(enemyCount, enemies));
+
+	enemyCount = 60;
+	enemies = new EnemyType[enemyCount]{
+			LEVEL1, NONE, NONE, NONE,
+			LEVEL1, NONE, NONE, NONE,
+			LEVEL1, NONE, NONE, NONE,
+			LEVEL1, NONE, NONE, NONE,
+			LEVEL1, NONE, NONE, NONE,
+			LEVEL1, NONE, NONE, NONE,
+			LEVEL1, NONE, NONE, NONE,
+			LEVEL1, NONE, NONE, NONE,
+			LEVEL1, NONE, NONE, NONE,
+			LEVEL1, NONE, NONE, NONE,
+			LEVEL1, NONE, NONE, NONE,
+			LEVEL1, NONE, NONE, NONE,
+			LEVEL1, NONE, NONE, NONE,
+			LEVEL1, NONE, NONE, NONE,
+			LEVEL1, NONE, NONE, NONE
+	};
+	WaveInfo::registerWaveInfo(2, new WaveInfo(enemyCount, enemies));
+
+	enemyCount = 40;
+	enemies = new EnemyType[enemyCount]{
+			LEVEL1, NONE, LEVEL1, NONE,
+			LEVEL1, NONE, LEVEL1, NONE,
+			LEVEL1, NONE, LEVEL1, NONE,
+			LEVEL1, NONE, LEVEL1, NONE,
+			LEVEL1, NONE, LEVEL1, NONE,
+			LEVEL1, NONE, LEVEL1, NONE,
+			LEVEL1, NONE, LEVEL1, NONE,
+			LEVEL1, NONE, LEVEL1, NONE,
+			LEVEL1, NONE, LEVEL1, NONE,
+			LEVEL1, NONE, LEVEL1, NONE,
+	};
+	WaveInfo::registerWaveInfo(3, new WaveInfo(enemyCount, enemies));
+
+	enemyCount = 40;
+	enemies = new EnemyType[enemyCount]{
+			LEVEL1, NONE, NONE, NONE,
+			LEVEL1, NONE, NONE, NONE,
+			LEVEL1, NONE, NONE, NONE,
+			LEVEL1, NONE, NONE, NONE,
+			LEVEL1, NONE, NONE, NONE,
+			LEVEL2, NONE, NONE, NONE,
+			LEVEL2, NONE, NONE, NONE,
+			LEVEL2, NONE, NONE, NONE,
+			LEVEL2, NONE, NONE, NONE,
+			LEVEL2, NONE, NONE, NONE
+	};
+	WaveInfo::registerWaveInfo(4, new WaveInfo(enemyCount, enemies));
+
+	enemyCount = 40;
+	enemies = new EnemyType[enemyCount]{
+			LEVEL1, NONE, LEVEL1, NONE,
+			LEVEL1, NONE, LEVEL1, NONE,
+			LEVEL1, NONE, LEVEL1, NONE,
+			LEVEL1, NONE, LEVEL1, NONE,
+			LEVEL1, NONE, LEVEL1, NONE,
+			LEVEL1, NONE, LEVEL1, NONE,
+			LEVEL1, NONE, LEVEL1, NONE,
+			LEVEL1, NONE, LEVEL2, NONE,
+			LEVEL2, NONE, LEVEL2, NONE,
+			LEVEL2, NONE, LEVEL2, NONE,
+	};
+	WaveInfo::registerWaveInfo(5, new WaveInfo(enemyCount, enemies));
+
+	enemyCount = 40;
+	enemies = new EnemyType[enemyCount]{
+			LEVEL1, NONE, LEVEL1, NONE,
+			LEVEL1, NONE, LEVEL1, NONE,
+			LEVEL1, NONE, LEVEL1, NONE,
+			LEVEL1, NONE, LEVEL1, NONE,
+			LEVEL1, NONE, LEVEL1, NONE,
+			LEVEL2, NONE, LEVEL2, NONE,
+			LEVEL2, NONE, LEVEL2, NONE,
+			LEVEL2, NONE, LEVEL2, NONE,
+			LEVEL2, NONE, LEVEL2, NONE,
+			LEVEL2, NONE, LEVEL2, NONE,
+	};
+	WaveInfo::registerWaveInfo(6, new WaveInfo(enemyCount, enemies));
+
+	enemyCount = 40;
+	enemies = new EnemyType[enemyCount]{
+			LEVEL2, NONE, LEVEL2, NONE,
+			LEVEL2, NONE, LEVEL2, NONE,
+			LEVEL2, NONE, LEVEL2, NONE,
+			LEVEL2, NONE, LEVEL2, NONE,
+			LEVEL2, NONE, LEVEL2, NONE,
+			LEVEL2, NONE, LEVEL2, NONE,
+			LEVEL2, NONE, LEVEL2, NONE,
+			LEVEL2, NONE, LEVEL2, NONE,
+			LEVEL2, NONE, LEVEL2, NONE,
+			LEVEL2, NONE, LEVEL2, NONE,
+	};
+	WaveInfo::registerWaveInfo(7, new WaveInfo(enemyCount, enemies));
+
+	enemyCount = 60;
+	enemies = new EnemyType[enemyCount]{
+			LEVEL2, NONE, NONE, NONE,
+			LEVEL2, NONE, NONE, NONE,
+			LEVEL2, NONE, NONE, NONE,
+			LEVEL2, NONE, NONE, NONE,
+			LEVEL2, NONE, NONE, NONE,
+			LEVEL2, NONE, NONE, NONE,
+			LEVEL2, NONE, NONE, NONE,
+			LEVEL2, NONE, NONE, NONE,
+			LEVEL2, NONE, NONE, NONE,
+			LEVEL2, NONE, NONE, NONE,
+			LEVEL3, NONE, NONE, NONE,
+			LEVEL3, NONE, NONE, NONE,
+			LEVEL3, NONE, NONE, NONE,
+			LEVEL3, NONE, NONE, NONE,
+			LEVEL3, NONE, NONE, NONE,
+	};
+	WaveInfo::registerWaveInfo(8, new WaveInfo(enemyCount, enemies));
+
+	enemyCount = 40;
+	enemies = new EnemyType[enemyCount]{
+			LEVEL2, NONE, LEVEL2, NONE,
+			LEVEL2, NONE, LEVEL2, NONE,
+			LEVEL2, NONE, LEVEL2, NONE,
+			LEVEL2, NONE, LEVEL2, NONE,
+			LEVEL2, NONE, LEVEL2, NONE,
+			LEVEL2, NONE, LEVEL2, NONE,
+			LEVEL2, NONE, LEVEL2, NONE,
+			LEVEL2, NONE, LEVEL3, NONE,
+			LEVEL3, NONE, LEVEL3, NONE,
+			LEVEL3, NONE, LEVEL3, NONE,
+	};
+	WaveInfo::registerWaveInfo(9, new WaveInfo(enemyCount, enemies));
+
+	enemyCount = 40;
+	enemies = new EnemyType[enemyCount]{
+			LEVEL2, NONE, LEVEL2, NONE,
+			LEVEL2, NONE, LEVEL2, NONE,
+			LEVEL2, NONE, LEVEL2, NONE,
+			LEVEL2, NONE, LEVEL2, NONE,
+			LEVEL2, NONE, LEVEL2, NONE,
+			LEVEL3, NONE, LEVEL3, NONE,
+			LEVEL3, NONE, LEVEL3, NONE,
+			LEVEL3, NONE, LEVEL3, NONE,
+			LEVEL3, NONE, LEVEL3, NONE,
+			LEVEL3, NONE, LEVEL3, NONE,
+	};
+	WaveInfo::registerWaveInfo(10, new WaveInfo(enemyCount, enemies));
+}
+
 void ToC::initCallback(MasterRenderer *masterRenderer)
 {
 	OpenGLThread::getInstance()->getWindow()->setTitle("ToC");
 	masterRenderer->addRenderer(SceneRenderer::getInstance());
-	masterRenderer->setClearColor(Vector4f( 0x27 / 255.0f, 0x87 / 255.0f, 0xB8 / 255.0f, 1.0f));
+	masterRenderer->setClearColor(Vector4f(0x27 / 255.0f, 0x87 / 255.0f, 0xB8 / 255.0f, 1.0f));
 
 	FontRegistry::loadFont("lazytown3", "resources/fonts/lazytown.ptf", 3, 0, 255, CEDAR_RENDERING_SHARP);
 
@@ -208,8 +387,10 @@ void ToC::initCallback(MasterRenderer *masterRenderer)
 
 	Window *window = OpenGLThread::getInstance()->getWindow();
 
-	this->loadMap();
 	this->initTowers();
+	this->initEnemies();
+	this->initWaves();
+	this->loadMap();
 
 	IngameScreen *ingameScreen = new IngameScreen();
 	ingameScreen->init(window->getWidth(), window->getHeight(), 3);
@@ -245,5 +426,7 @@ void ToC::onStart()
 
 void ToC::onStop()
 {
-	// Nothing to do here
+	TowerInfo::cleanup();
+	EnemyInfo::cleanup();
+	WaveInfo::cleanup();
 }

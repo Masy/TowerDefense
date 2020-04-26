@@ -2,19 +2,20 @@
 // Created by masy on 21.03.20.
 //
 
-#include <cedar/Cedar.hpp>
-#include <TDMap.h>
+#include <cedar/ModelRegistry.hpp>
 #include "EnemyEntity.h"
 #include "cedar/EngineThread.hpp"
-#include "cedar/Math.hpp"
+#include "TDMap.h"
 
-EnemyEntity::EnemyEntity(unsigned int entityId, const unsigned int pathPointCount, const cedar::Vector3f *pathPoints, float maxHealth, const EnemyType &type)
+EnemyEntity::EnemyEntity(unsigned int entityId, const unsigned int pathPointCount, const cedar::Vector3f *pathPoints, const EnemyType &type)
 		: Entity(entityId, pathPoints[0])
 {
-	this->m_maxHealth = maxHealth;
-	this->m_health = maxHealth;
+	this->m_model = ModelRegistry::getModel("enemy");
+	const EnemyInfo *enemyInfo = EnemyInfo::getEnemyInfo(type);
+	this->m_maxHealth = enemyInfo->getHealth();
+	this->m_health = enemyInfo->getHealth();
 	this->m_enemyType = type;
-	this->m_tint = cedar::Vector3f(1.0f, 1.0f, 1.0f);
+	this->m_tint = enemyInfo->getColor();
 	this->m_speed = 0.50f;
 	this->m_aiHandler = new AIHandler(pathPointCount - 1, pathPoints, this->m_speed);
 }
@@ -39,22 +40,32 @@ void EnemyEntity::update(const unsigned long currentTime, const unsigned long ti
 	Entity::update(currentTime, tickCount);
 }
 
-float EnemyEntity::getHealth() const
+EnemyType EnemyEntity::getEnemyType() const
+{
+	return this->m_enemyType;
+}
+
+int EnemyEntity::getMaxHealth() const
+{
+	return this->m_maxHealth;
+}
+
+int EnemyEntity::getHealth() const
 {
 	return this->m_health;
 }
 
-void EnemyEntity::setHealth(float newHealth)
+void EnemyEntity::setHealth(int newHealth)
 {
-	this->m_health = cedar::clamp(newHealth, 0.0f, this->m_maxHealth);
-	if (this->m_health == 0.0f)
+	this->m_health = newHealth < 0 ? 0 : (newHealth > this->m_maxHealth ? this->m_maxHealth : newHealth);
+	if (this->m_health == 0)
 		this->kill();
 }
 
-void EnemyEntity::damage(float damageAmount)
+void EnemyEntity::damage(int damageAmount)
 {
-	this->m_health = std::max(0.0f, this->m_health - damageAmount);
-	if (this->m_health == 0.0f)
+	this->m_health = std::max(0, this->m_health - damageAmount);
+	if (this->m_health == 0)
 		this->kill();
 }
 
@@ -63,29 +74,7 @@ void EnemyEntity::kill()
 	cedar::EngineThread::getInstance()->getLoadedScene()->getEntityManager()->removeEntity(this->m_entityId);
 }
 
-float EnemyEntity::getMaxHealth() const
-{
-	return this->m_maxHealth;
-}
-
-void EnemyEntity::setMaxHealth(float newMaxHealth)
-{
-	this->m_maxHealth = newMaxHealth;
-	if (this->m_health > newMaxHealth)
-		this->m_health = newMaxHealth;
-}
-
-EnemyType EnemyEntity::getEnemyType() const
-{
-	return this->m_enemyType;
-}
-
 cedar::Vector3f EnemyEntity::getTint() const
 {
 	return this->m_tint;
-}
-
-void EnemyEntity::setTint(const cedar::Vector3f &newTint)
-{
-	this->m_tint = newTint;
 }
