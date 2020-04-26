@@ -136,7 +136,7 @@ void ToC::loadMap()
 	pathFile.read(reinterpret_cast<char*>(pathPoints), vertexDataSize);
 	pathFile.close();
 
-	Player *player = new Player(100, 250);
+	Player *player = new Player(100, 225);
 	TDMap *map = new TDMap(Vector3f(0.0f, 0.0f, 0.0f), player, terrainModel, noBuildZone, vertexCount, pathPoints);
 	EngineThread::getInstance()->loadScene(map);
 }

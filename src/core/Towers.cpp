@@ -119,7 +119,7 @@ void LevelInfo::set(const int newPrice, const float newRadius, const float newHe
 
 std::map<TowerType, const TowerInfo *> TowerInfo::m_towers = std::map<TowerType, const TowerInfo *>();
 
-TowerInfo::TowerInfo(const std::string &name, int levels, const LevelInfo *levelInfo)
+TowerInfo::TowerInfo(const std::string &name, const unsigned int levels, const LevelInfo *levelInfo)
 {
 	this->m_name = name;
 	this->m_levels = levels;
@@ -136,12 +136,12 @@ std::string TowerInfo::getName() const
 	return this->m_name;
 }
 
-int TowerInfo::getLevels() const
+unsigned int TowerInfo::getLevels() const
 {
 	return this->m_levels;
 }
 
-const LevelInfo *TowerInfo::getLevelInfo(int level) const
+const LevelInfo *TowerInfo::getLevelInfo(const unsigned int level) const
 {
 	return &this->m_levelInfo[level];
 }

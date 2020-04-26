@@ -2,14 +2,13 @@
 // Created by masy on 06.03.20.
 //
 
-#include "cedar/Cedar.hpp"
+#include <IngameScreen.hpp>
 #include "EnemyEntity.h"
 #include "KeyHandler.h"
 #include "cedar/Input.hpp"
 #include "cedar/EngineThread.hpp"
 #include "cedar/OpenGLThread.hpp"
 #include "cedar/ScreenRegistry.hpp"
-#include "cedar/ModelRegistry.hpp"
 #include "GameStates.h"
 #include "TDMap.h"
 
@@ -52,12 +51,6 @@ void KeyHandler::handle(const unsigned long currentTime, const unsigned long tic
 		if (inputHandler->isKeyDown(CEDAR_KEY_S))
 			move.z += 1.0f;
 
-//		if (inputHandler->isKeyDown(CEDAR_KEY_SPACE))
-//			move.y += 1.0f;
-//
-//		if (inputHandler->isKeyDown(CEDAR_KEY_LEFT_SHIFT))
-//			move.y -= 1.0f;
-
 		move.normalize();
 
 		move *= speed;
@@ -84,6 +77,7 @@ void KeyHandler::handle(const unsigned long currentTime, const unsigned long tic
 					{
 						selectedTower->setTint(Vector3f(1.0f, 1.0f, 1.0f));
 						map->setSelectedTower(nullptr);
+						dynamic_cast<IngameScreen*>(cedar::ScreenRegistry::getScreen("ingameScreen"))->setSelectedTower(nullptr);
 						break;
 					}
 				}
@@ -170,6 +164,7 @@ void KeyHandler::handle(const unsigned long currentTime, const unsigned long tic
 				map->getPlayer()->addCoins(-200);
 
 				cedar::EngineThread::getInstance()->setGameState(CEDAR_STATE_RUNNING);
+				dynamic_cast<IngameScreen*>(cedar::ScreenRegistry::getScreen("ingameScreen"))->setSelectedTower(nullptr);
 			}
 		}
 	}
@@ -195,6 +190,7 @@ void KeyHandler::handle(const unsigned long currentTime, const unsigned long tic
 						if (oldSelected)
 							oldSelected->setTint(Vector3f(1.0f, 1.0f, 1.0f));
 						map->setSelectedTower(newSelected);
+						dynamic_cast<IngameScreen*>(cedar::ScreenRegistry::getScreen("ingameScreen"))->setSelectedTower(newSelected);
 					}
 					else
 					{
@@ -202,6 +198,7 @@ void KeyHandler::handle(const unsigned long currentTime, const unsigned long tic
 						{
 							oldSelected->setTint(Vector3f(1.0f, 1.0f, 1.0f));
 							map->setSelectedTower(nullptr);
+							dynamic_cast<IngameScreen*>(cedar::ScreenRegistry::getScreen("ingameScreen"))->setSelectedTower(nullptr);
 						}
 					}
 				}

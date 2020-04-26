@@ -200,7 +200,7 @@ private:
 	/**
 	 * The number of levels the tower has.
 	 */
-	int m_levels;
+	unsigned int m_levels;
 	/**
 	 * The information about each level.
 	 */
@@ -214,7 +214,7 @@ public:
 	 * @param levels The number of levels the tower has.
 	 * @param levelInfo A pointer to the array of level information.
 	 */
-	TowerInfo(const std::string &name, int levels, const LevelInfo *levelInfo);
+	TowerInfo(const std::string &name, unsigned int levels, const LevelInfo *levelInfo);
 
 	/**
 	 * Deletes the tower information.
@@ -233,7 +233,7 @@ public:
 	 *
 	 * @return The number of levels of the tower.
 	 */
-	[[nodiscard]] int getLevels() const;
+	[[nodiscard]] unsigned int getLevels() const;
 
 	/**
 	 * Gets the information about a level of the tower..
@@ -241,7 +241,7 @@ public:
 	 * @param level The level of the tower the information will be about.
 	 * @return A constant pointer to the level information about the tower level.
 	 */
-	[[nodiscard]] const LevelInfo *getLevelInfo(int level) const;
+	[[nodiscard]] const LevelInfo *getLevelInfo(unsigned int level) const;
 
 	/**
 	 * Registers the given tower information for the tower type.

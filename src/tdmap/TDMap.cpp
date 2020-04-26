@@ -172,7 +172,8 @@ void TDMap::update(const unsigned long currentTime, const unsigned long tickCoun
 		tower->update(currentTime, tickCount);
 	}
 
-	if (this->m_selectedTower)
+	// If the selected tower is already placed it was updated by the for loop
+	if (this->m_selectedTower && !this->m_selectedTower->isPlaced())
 		this->m_selectedTower->update(currentTime, tickCount);
 
 	if (tickCount % 15 == 0)
@@ -212,7 +213,8 @@ void TDMap::render(const unsigned long currentTime, const unsigned long tickCoun
 		}
 	}
 
-	if (this->m_selectedTower)
+	// If the selected tower is already placed it was rendered by the for loop
+	if (this->m_selectedTower && !this->m_selectedTower->isPlaced())
 	{
 		towerModel = this->m_selectedTower->getModel();
 		if (towerModel)
