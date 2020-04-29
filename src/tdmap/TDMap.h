@@ -2,8 +2,8 @@
 // Created by masy on 11.03.20.
 //
 
-#ifndef TALESOFCATVENTURE_TDMAP_H
-#define TALESOFCATVENTURE_TDMAP_H
+#ifndef GUARDIAN_TDMAP_H
+#define GUARDIAN_TDMAP_H
 
 #include "cedar/Scene.hpp"
 #include "cedar/MeshCollider2D.hpp"
@@ -55,4 +55,4 @@ public:
 	[[nodiscard]] Player *getPlayer() const;
 };
 
-#endif //TALESOFCATVENTURE_TDMAP_H
+#endif //GUARDIAN_TDMAP_H

@@ -2,8 +2,8 @@
 // Created by masy on 31.01.20.
 //
 
-#ifndef TALESOFCATVENTURE_TOCCONFIG_H
-#define TALESOFCATVENTURE_TOCCONFIG_H
+#ifndef GUARDIAN_GUARDIANCONFIG_H
+#define GUARDIAN_GUARDIANCONFIG_H
 
 #include <iostream>
 #include "cedar/Input.hpp"
@@ -11,7 +11,7 @@
 /**
  * The configuration class storing various values.
  */
-class ToCConfig
+class GuardianConfig
 {
 public:
 	/**
@@ -91,11 +91,11 @@ public:
 	/**
 	 * Creates a new configuration.
 	 */
-	ToCConfig();
+	GuardianConfig();
 
-	friend std::ostream &operator<<(std::ostream &os, ToCConfig &config);
+	friend std::ostream &operator<<(std::ostream &os, GuardianConfig &config);
 
-	friend std::istream &operator>>(std::istream &is, ToCConfig &config);
+	friend std::istream &operator>>(std::istream &is, GuardianConfig &config);
 };
 
-#endif //TALESOFCATVENTURE_TOCCONFIG_H
+#endif //GUARDIAN_GUARDIANCONFIG_H

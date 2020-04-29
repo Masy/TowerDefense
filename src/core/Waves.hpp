@@ -2,8 +2,8 @@
 // Created by masy on 26.04.20.
 //
 
-#ifndef TALESOFCATVENTURE_WAVES_HPP
-#define TALESOFCATVENTURE_WAVES_HPP
+#ifndef GUARDIAN_WAVES_HPP
+#define GUARDIAN_WAVES_HPP
 
 #include "Enemies.hpp"
 
@@ -84,4 +84,4 @@ public:
 	static void cleanup();
 };
 
-#endif //TALESOFCATVENTURE_WAVES_HPP
+#endif //GUARDIAN_WAVES_HPP

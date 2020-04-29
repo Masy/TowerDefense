@@ -2,8 +2,8 @@
 // Created by masy on 06.03.20.
 //
 
-#ifndef TALESOFCATVENTURE_KEYHANDLER_H
-#define TALESOFCATVENTURE_KEYHANDLER_H
+#ifndef GUARDIAN_KEYHANDLER_H
+#define GUARDIAN_KEYHANDLER_H
 
 #include "cedar/InputHandler.hpp"
 
@@ -36,4 +36,4 @@ public:
 	static void handle(unsigned long currentTime, unsigned long tickCount, const cedar::InputHandler *inputHandler);
 };
 
-#endif //TALESOFCATVENTURE_KEYHANDLER_H
+#endif //GUARDIAN_KEYHANDLER_H

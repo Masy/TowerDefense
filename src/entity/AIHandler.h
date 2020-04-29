@@ -2,8 +2,8 @@
 // Created by masy on 21.03.20.
 //
 
-#ifndef TALESOFCATVENTURE_AIHANDLER_H
-#define TALESOFCATVENTURE_AIHANDLER_H
+#ifndef GUARDIAN_AIHANDLER_H
+#define GUARDIAN_AIHANDLER_H
 
 #include "cedar/Vector3f.hpp"
 
@@ -24,4 +24,4 @@ public:
 	[[nodiscard]] bool reachedGoal() const;
 };
 
-#endif //TALESOFCATVENTURE_AIHANDLER_H
+#endif //GUARDIAN_AIHANDLER_H

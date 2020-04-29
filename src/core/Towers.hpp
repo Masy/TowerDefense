@@ -2,8 +2,8 @@
 // Created by masy on 25.04.20.
 //
 
-#ifndef TALESOFCATVENTURE_TOWERS_HPP
-#define TALESOFCATVENTURE_TOWERS_HPP
+#ifndef GUARDIAN_TOWERS_HPP
+#define GUARDIAN_TOWERS_HPP
 
 #include <string>
 #include <map>
@@ -266,4 +266,4 @@ public:
 };
 
 
-#endif //TALESOFCATVENTURE_TOWERS_HPP
+#endif //GUARDIAN_TOWERS_HPP

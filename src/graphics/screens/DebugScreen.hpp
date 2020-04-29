@@ -2,8 +2,8 @@
 // Created by masy on 19.04.20.
 //
 
-#ifndef TALESOFCATVENTURE_DEBUGSCREEN_HPP
-#define TALESOFCATVENTURE_DEBUGSCREEN_HPP
+#ifndef GUARDIAN_DEBUGSCREEN_HPP
+#define GUARDIAN_DEBUGSCREEN_HPP
 
 #include "cedar/Screen.hpp"
 #include "cedar/Label.hpp"
@@ -58,4 +58,4 @@ public:
 	void init(int width, int height, int guiScale);
 };
 
-#endif //TALESOFCATVENTURE_DEBUGSCREEN_HPP
+#endif //GUARDIAN_DEBUGSCREEN_HPP

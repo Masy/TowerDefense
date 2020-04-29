@@ -2,8 +2,8 @@
 // Created by masy on 21.03.20.
 //
 
-#ifndef TALESOFCATVENTURE_ENEMYENTITY_H
-#define TALESOFCATVENTURE_ENEMYENTITY_H
+#ifndef GUARDIAN_ENEMYENTITY_H
+#define GUARDIAN_ENEMYENTITY_H
 
 #include "cedar/Entity.hpp"
 #include "AIHandler.h"
@@ -42,4 +42,4 @@ public:
 	[[nodiscard]] Vector3f getTint() const;
 };
 
-#endif //TALESOFCATVENTURE_ENEMYENTITY_H
+#endif //GUARDIAN_ENEMYENTITY_H

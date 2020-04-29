@@ -15,8 +15,8 @@
 #include "cedar/Math.hpp"
 #include "cedar/ModelRegistry.hpp"
 
-#include "ToC.h"
-#include "ToCLogAppender.h"
+#include "Guardian.h"
+#include "GuardianLogAppender.h"
 #include "KeyHandler.h"
 #include "SceneRenderer.h"
 #include "DebugRenderer.h"
@@ -27,18 +27,18 @@
 #include "Enemies.hpp"
 #include "Waves.hpp"
 
-ToC::ToC()
+Guardian::Guardian()
 {
-	this->m_config = new ToCConfig();
+	this->m_config = new GuardianConfig();
 }
 
-ToC *ToC::getInstance()
+Guardian *Guardian::getInstance()
 {
-	static ToC *instance = new ToC();
+	static Guardian *instance = new Guardian();
 	return instance;
 }
 
-void ToC::loadMap() const
+void Guardian::loadMap() const
 {
 	unsigned char bitmask;
 	Model *enemyModel = cedar::ModelRegistry::loadBMFModel("enemy", "resources/models/enemy.bmf", &bitmask);
@@ -145,7 +145,7 @@ void ToC::loadMap() const
 	EngineThread::getInstance()->loadScene(map);
 }
 
-void ToC::initTowers() const
+void Guardian::initTowers() const
 {
 	unsigned char bitmask;
 	Model *towerModel = cedar::ModelRegistry::loadBMFModel("towerCanon_level0", "resources/models/towerCanon_level0.bmf", &bitmask);
@@ -194,7 +194,7 @@ void ToC::initTowers() const
 	TowerInfo::registerTowerInfo(TOWER_CANON, new TowerInfo("Canon", levels, canonLevelInfo));
 }
 
-void ToC::initEnemies() const
+void Guardian::initEnemies() const
 {
 	EnemyInfo::registerEnemyInfo(LEVEL1, new EnemyInfo(1, Vector3f(0xD3 / 255.0f, 0x50 / 255.0f, 0x50 / 255.0f)));
 	EnemyInfo::registerEnemyInfo(LEVEL2, new EnemyInfo(2, Vector3f(0x6F / 255.0f, 0xD3 / 255.0f, 0x50 / 255.0f)));
@@ -207,7 +207,7 @@ void ToC::initEnemies() const
 	EnemyInfo::registerEnemyInfo(LEVEL9, new EnemyInfo(20, Vector3f(0x2A / 255.0f, 0x28 / 255.0f, 0x27 / 255.0f)));
 }
 
-void ToC::initWaves() const
+void Guardian::initWaves() const
 {
 	unsigned int enemyCount = 40;
 	EnemyType *enemies = new EnemyType[enemyCount]{
@@ -370,9 +370,10 @@ void ToC::initWaves() const
 	WaveInfo::registerWaveInfo(10, new WaveInfo(enemyCount, enemies));
 }
 
-void ToC::initCallback(MasterRenderer *masterRenderer)
+void Guardian::initCallback(MasterRenderer *masterRenderer)
 {
-	OpenGLThread::getInstance()->getWindow()->setTitle("ToC");
+	OpenGLThread::getInstance()->getWindow()->setTitle("Guardian");
+	std::cout << OpenGLThread::getInstance()->getWindow()->getTitle();
 	masterRenderer->addRenderer(SceneRenderer::getInstance());
 	masterRenderer->setClearColor(Vector4f(0x27 / 255.0f, 0x87 / 255.0f, 0xB8 / 255.0f, 1.0f));
 
@@ -410,11 +411,11 @@ void ToC::initCallback(MasterRenderer *masterRenderer)
 	escapeScreen->init(window->getWidth(), window->getHeight(), 3);
 }
 
-void ToC::preStart()
+void Guardian::preStart()
 {
 	config = new Config(1920, 1080, 60, -1, false, 90.0f);
 
-	ToCLogAppender *logAppender = new ToCLogAppender();
+	GuardianLogAppender *logAppender = new GuardianLogAppender();
 	LoggerFactory::setQueueLogAppender(logAppender);
 	logAppender->start();
 
@@ -423,16 +424,16 @@ void ToC::preStart()
 		EngineThread::getInstance()->setCamera(cam);
 	});
 
-	cedar::OpenGLThread::getInstance()->setInitCallback(std::bind(&ToC::initCallback, this, std::placeholders::_1));
+	cedar::OpenGLThread::getInstance()->setInitCallback(std::bind(&Guardian::initCallback, this, std::placeholders::_1));
 	cedar::OpenGLThread::getInstance()->setInputCallback(KeyHandler::handle);
 }
 
-void ToC::onStart()
+void Guardian::onStart()
 {
 	// Nothing to do here
 }
 
-void ToC::onStop()
+void Guardian::onStop()
 {
 	TowerInfo::cleanup();
 	EnemyInfo::cleanup();

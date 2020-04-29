@@ -2,8 +2,8 @@
 // Created by masy on 12.03.20.
 //
 
-#ifndef TALESOFCATVENTURE_TOWERENTITY_H
-#define TALESOFCATVENTURE_TOWERENTITY_H
+#ifndef GUARDIAN_TOWERENTITY_H
+#define GUARDIAN_TOWERENTITY_H
 
 #include "cedar/Entity.hpp"
 #include "Towers.hpp"
@@ -171,4 +171,4 @@ public:
 
 };
 
-#endif //TALESOFCATVENTURE_TOWERENTITY_H
+#endif //GUARDIAN_TOWERENTITY_H

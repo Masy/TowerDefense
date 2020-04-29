@@ -120,7 +120,7 @@ void buyTowerButtonInteractHandler(Element *element)
 
 		TowerEntity *ghostTower = new TowerEntity(cedar::Entity::nextEntityId(), planeIntersection, TOWER_CANON);
 		map->setSelectedTower(ghostTower);
-		EngineThread::getInstance()->setGameState(TOC_STATE_PLACING);
+		EngineThread::getInstance()->setGameState(GUARDIAN_STATE_PLACING);
 	}
 }
 

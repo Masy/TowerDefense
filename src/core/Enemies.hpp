@@ -2,8 +2,8 @@
 // Created by masy on 26.04.20.
 //
 
-#ifndef TALESOFCATVENTURE_ENEMIES_HPP
-#define TALESOFCATVENTURE_ENEMIES_HPP
+#ifndef GUARDIAN_ENEMIES_HPP
+#define GUARDIAN_ENEMIES_HPP
 
 #include <map>
 #include "cedar/Vector3f.hpp"
@@ -92,4 +92,4 @@ public:
 	static void cleanup();
 };
 
-#endif //TALESOFCATVENTURE_ENEMIES_HPP
+#endif //GUARDIAN_ENEMIES_HPP
