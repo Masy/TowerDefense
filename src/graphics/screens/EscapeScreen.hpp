@@ -2,8 +2,8 @@
 // Created by masy on 19.04.20.
 //
 
-#ifndef TALESOFCATVENTURE_ESCAPESCREEN_HPP
-#define TALESOFCATVENTURE_ESCAPESCREEN_HPP
+#ifndef GUARDIAN_ESCAPESCREEN_HPP
+#define GUARDIAN_ESCAPESCREEN_HPP
 
 #include "cedar/Screen.hpp"
 #include "cedar/ImageButton.hpp"
@@ -50,4 +50,4 @@ public:
 	void init(int width, int height, int scale);
 };
 
-#endif //TALESOFCATVENTURE_ESCAPESCREEN_HPP
+#endif //GUARDIAN_ESCAPESCREEN_HPP

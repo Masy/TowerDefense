@@ -2,8 +2,8 @@
 // Created by masy on 14.04.20.
 //
 
-#ifndef TALESOFCATVENTURE_PLAYER_HPP
-#define TALESOFCATVENTURE_PLAYER_HPP
+#ifndef GUARDIAN_PLAYER_HPP
+#define GUARDIAN_PLAYER_HPP
 
 class Player
 {
@@ -27,4 +27,4 @@ public:
 	void setCoins(int newCoins);
 };
 
-#endif //TALESOFCATVENTURE_PLAYER_HPP
+#endif //GUARDIAN_PLAYER_HPP

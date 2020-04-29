@@ -2,8 +2,8 @@
 // Created by masy on 01.03.20.
 //
 
-#ifndef TALESOFCATVENTURE_SCENERENDERER_H
-#define TALESOFCATVENTURE_SCENERENDERER_H
+#ifndef GUARDIAN_SCENERENDERER_H
+#define GUARDIAN_SCENERENDERER_H
 
 #include <vector>
 
@@ -76,4 +76,4 @@ public:
 	void render(unsigned long currentTime, unsigned long tickCount) override;
 };
 
-#endif //TALESOFCATVENTURE_SCENERENDERER_H
+#endif //GUARDIAN_SCENERENDERER_H

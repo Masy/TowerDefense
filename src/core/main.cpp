@@ -1,6 +1,6 @@
-#include "ToC.h"
+#include "Guardian.h"
 
 int main(const int argc, const char **args) {
-	ToC::getInstance()->start(argc, args);
+	Guardian::getInstance()->start(argc, args);
 	return 0;
 }

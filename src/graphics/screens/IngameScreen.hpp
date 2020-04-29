@@ -2,8 +2,8 @@
 // Created by masy on 19.04.20.
 //
 
-#ifndef TALESOFCATVENTURE_INGAMESCREEN_HPP
-#define TALESOFCATVENTURE_INGAMESCREEN_HPP
+#ifndef GUARDIAN_INGAMESCREEN_HPP
+#define GUARDIAN_INGAMESCREEN_HPP
 
 #include "cedar/ImageButton.hpp"
 #include "cedar/Screen.hpp"
@@ -188,4 +188,4 @@ public:
 	void setCurrentWave(unsigned int currentWave);
 };
 
-#endif //TALESOFCATVENTURE_INGAMESCREEN_HPP
+#endif //GUARDIAN_INGAMESCREEN_HPP

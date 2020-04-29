@@ -2,7 +2,7 @@
 // Created by masy on 01.02.20.
 //
 
-#include "ToCLogAppender.h"
+#include "GuardianLogAppender.h"
 #include <cstdio>
 #include <iostream>
 #include <sstream>
@@ -12,7 +12,7 @@
 #define stat _stat
 #endif
 
-ToCLogAppender::ToCLogAppender() : QueueLogAppender()
+GuardianLogAppender::GuardianLogAppender() : QueueLogAppender()
 {
 	auto filename = "logs/latest.log";
 	FILE *latest = fopen(filename, "r");
@@ -41,7 +41,7 @@ ToCLogAppender::ToCLogAppender() : QueueLogAppender()
 	}
 }
 
-void ToCLogAppender::start()
+void GuardianLogAppender::start()
 {
 	QueueLogAppender::start();
 	this->m_logFile.open("logs/latest.log", std::ios::out | std::ios::app);
@@ -49,7 +49,7 @@ void ToCLogAppender::start()
 		throw cedar::LogAppenderStartException("Could not start queue log appender. Couldn't create log file!");
 }
 
-ToCLogAppender::~ToCLogAppender()
+GuardianLogAppender::~GuardianLogAppender()
 {
 	this->m_logFile.close();
 }
@@ -120,7 +120,7 @@ const char* levelToColor(const cedar::LogLevel &logLevel)
 	}
 }
 
-void ToCLogAppender::processLogEvent(const cedar::LogEvent *logEvent)
+void GuardianLogAppender::processLogEvent(const cedar::LogEvent *logEvent)
 {
 	std::stringstream fileStream;
 	std::stringstream consoleStream;

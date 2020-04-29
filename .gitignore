@@ -112,6 +112,7 @@ _deps
 logs/
 latex/
 html/
-TalesOfCatventure
-TalesOfCatventure.cbp
+Guardian
+Guardian.cbp
+workingdir/
 .idea/

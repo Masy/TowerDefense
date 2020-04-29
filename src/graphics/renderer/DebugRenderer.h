@@ -2,8 +2,8 @@
 // Created by masy on 11.03.20.
 //
 
-#ifndef TALESOFCATVENTURE_DEBUGRENDERER_H
-#define TALESOFCATVENTURE_DEBUGRENDERER_H
+#ifndef GUARDIAN_DEBUGRENDERER_H
+#define GUARDIAN_DEBUGRENDERER_H
 
 #include "cedar/Renderer.hpp"
 #include "cedar/ShaderProgram.hpp"
@@ -45,4 +45,4 @@ public:
 	void render(unsigned long currentTime, unsigned long tickCount) override;
 };
 
-#endif //TALESOFCATVENTURE_DEBUGRENDERER_H
+#endif //GUARDIAN_DEBUGRENDERER_H

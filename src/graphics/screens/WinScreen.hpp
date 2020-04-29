@@ -2,8 +2,8 @@
 // Created by masy on 27.04.20.
 //
 
-#ifndef TALESOFCATVENTURE_WINSCREEN_HPP
-#define TALESOFCATVENTURE_WINSCREEN_HPP
+#ifndef GUARDIAN_WINSCREEN_HPP
+#define GUARDIAN_WINSCREEN_HPP
 
 #include "cedar/Screen.hpp"
 #include "cedar/Label.hpp"
@@ -47,4 +47,4 @@ public:
 	void init(int width, int height, int scale);
 };
 
-#endif //TALESOFCATVENTURE_WINSCREEN_HPP
+#endif //GUARDIAN_WINSCREEN_HPP

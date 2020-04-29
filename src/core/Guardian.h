@@ -2,38 +2,38 @@
 // Created by masy on 26.01.20.
 //
 
-#ifndef TALESOFCATVENTURE_TOC_H
-#define TALESOFCATVENTURE_TOC_H
+#ifndef GUARDIAN_GUARDIAN_H
+#define GUARDIAN_GUARDIAN_H
 
 #include "cedar/Cedar.hpp"
-#include "ToCConfig.h"
+#include "GuardianConfig.h"
 #include "cedar/Font.hpp"
 #include "cedar/MasterRenderer.hpp"
 
 /**
  * The main class of the game.
  */
-class ToC : public Cedar
+class Guardian : public Cedar
 {
 private:
 
 	/**
 	 * Creates a new main game object.
 	 */
-	ToC();
+	Guardian();
 
 public:
 	/**
 	 * A pointer to the configuration of the game.
 	 */
-	ToCConfig *m_config;
+	GuardianConfig *m_config;
 
 	/**
 	 * Gets the singleton of this class.
 	 *
-	 * @return A pointer to the ToC singleton object.
+	 * @return A pointer to the Guardian singleton object.
 	 */
-	static ToC *getInstance();
+	static Guardian *getInstance();
 
 	/**
 	 * Method which is called before the game starts.
@@ -78,4 +78,4 @@ public:
 	void initCallback(MasterRenderer *masterRenderer);
 };
 
-#endif //TALESOFCATVENTURE_TOC_H
+#endif //GUARDIAN_GUARDIAN_H

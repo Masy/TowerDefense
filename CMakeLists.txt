@@ -1,16 +1,16 @@
 cmake_minimum_required(VERSION 3.10)
-project(TalesOfCatventure)
+project(Guardian)
 
 add_subdirectory(cedar)
 
-add_executable(TalesOfCatventure
+add_executable(Guardian
 		src/core/main.cpp
-		src/core/ToC.h
-		src/core/ToC.cpp
-		src/core/config/ToCConfig.h
-		src/core/config/ToCConfig.cpp
-		src/core/logging/ToCLogAppender.h
-		src/core/logging/ToCLogAppender.cpp
+		src/core/Guardian.h
+		src/core/Guardian.cpp
+		src/core/config/GuardianConfig.h
+		src/core/config/GuardianConfig.cpp
+		src/core/logging/GuardianLogAppender.h
+		src/core/logging/GuardianLogAppender.cpp
 		src/graphics/renderer/SceneRenderer.h
 		src/graphics/renderer/SceneRenderer.cpp
 		src/input/KeyHandler.h
@@ -33,9 +33,20 @@ add_executable(TalesOfCatventure
 		src/graphics/screens/DebugScreen.hpp
 		src/graphics/screens/DebugScreen.cpp
 		src/graphics/screens/EscapeScreen.hpp
-		src/graphics/screens/EscapeScreen.cpp src/core/Towers.hpp src/core/Towers.cpp src/core/Enemies.hpp src/core/Enemies.cpp src/core/Waves.hpp src/core/Waves.cpp src/graphics/screens/GameOverScreen.hpp src/graphics/screens/GameOverScreen.cpp src/graphics/screens/WinScreen.hpp src/graphics/screens/WinScreen.cpp)
+		src/graphics/screens/EscapeScreen.cpp
+		src/core/Towers.hpp
+		src/core/Towers.cpp
+		src/core/Enemies.hpp
+		src/core/Enemies.cpp
+		src/core/Waves.hpp
+		src/core/Waves.cpp
+		src/graphics/screens/GameOverScreen.hpp
+		src/graphics/screens/GameOverScreen.cpp
+		src/graphics/screens/WinScreen.hpp
+		src/graphics/screens/WinScreen.cpp)
 
-target_include_directories(TalesOfCatventure PUBLIC
+
+target_include_directories(Guardian PUBLIC
 		cedar/include
 		src/core
 		src/core/config
@@ -46,4 +57,4 @@ target_include_directories(TalesOfCatventure PUBLIC
 		src/tdmap
 		src/entity)
 
-target_link_libraries(TalesOfCatventure cedar)
+target_link_libraries(Guardian cedar)

@@ -82,15 +82,15 @@ void KeyHandler::handle(const unsigned long currentTime, const unsigned long tic
 					}
 				}
 				screen->setVisibility(true);
-				cedar::EngineThread::getInstance()->setGameState(TOC_STATE_MENU);
+				cedar::EngineThread::getInstance()->setGameState(GUARDIAN_STATE_MENU);
 				break;
 
-			case TOC_STATE_MENU:
+			case GUARDIAN_STATE_MENU:
 				screen->setVisibility(false);
 				cedar::EngineThread::getInstance()->setGameState(CEDAR_STATE_RUNNING);
 				break;
 
-			case TOC_STATE_PLACING:
+			case GUARDIAN_STATE_PLACING:
 				map = reinterpret_cast<TDMap*>(cedar::EngineThread::getInstance()->getLoadedScene());
 				if (map)
 				{
@@ -121,7 +121,7 @@ void KeyHandler::handle(const unsigned long currentTime, const unsigned long tic
 		window->showCursor(false);
 	}
 
-	if (gameState == TOC_STATE_PLACING)
+	if (gameState == GUARDIAN_STATE_PLACING)
 	{
 		cedar::Vector3f origin;
 		cedar::Vector3f rayDir;

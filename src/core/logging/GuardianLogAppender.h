@@ -2,16 +2,16 @@
 // Created by masy on 01.02.20.
 //
 
-#ifndef TALESOFCATVENTURE_TOCLOGAPPENDER_H
-#define TALESOFCATVENTURE_TOCLOGAPPENDER_H
+#ifndef GUARDIAN_GUARDIANLOGAPPENDER_H
+#define GUARDIAN_GUARDIANLOGAPPENDER_H
 
 #include "cedar/QueueLogAppender.hpp"
 #include <fstream>
 
 /**
- * The log appender of ToC.
+ * The log appender of Guardian.
  */
-class ToCLogAppender : public cedar::QueueLogAppender
+class GuardianLogAppender : public cedar::QueueLogAppender
 {
 private:
 	/**
@@ -20,17 +20,17 @@ private:
 	std::ofstream m_logFile;
 public:
 	/**
-	 * Creates a new ToC log appender.
+	 * Creates a new Guardian log appender.
 	 */
-	ToCLogAppender();
+	GuardianLogAppender();
 
 	/**
-	 * Destroys the ToC log appender.
+	 * Destroys the Guardian log appender.
 	 */
-	~ToCLogAppender();
+	~GuardianLogAppender();
 
 	/**
-	 * Starts the ToC log appender.
+	 * Starts the Guardian log appender.
 	 */
 	void start() override;
 
@@ -42,4 +42,4 @@ public:
 	void processLogEvent(const cedar::LogEvent *logEvent) override;
 };
 
-#endif //TALESOFCATVENTURE_TOCLOGAPPENDER_H
+#endif //GUARDIAN_GUARDIANLOGAPPENDER_H

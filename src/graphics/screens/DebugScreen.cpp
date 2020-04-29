@@ -91,11 +91,11 @@ void stateLabelUpdateCallback(Element *element, const unsigned long currentTime,
 			reinterpret_cast<Label*>(element)->setText("State: ingame");
 			break;
 
-		case TOC_STATE_MENU:
+		case GUARDIAN_STATE_MENU:
 			reinterpret_cast<Label*>(element)->setText("State: menu");
 			break;
 
-		case TOC_STATE_PLACING:
+		case GUARDIAN_STATE_PLACING:
 			reinterpret_cast<Label*>(element)->setText("State: placing");
 			break;
 
