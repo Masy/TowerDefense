@@ -70,8 +70,8 @@ if (UNIX)
 			DESTINATION "/opt/Guardian/logs")
 
 	install(FILES
-			resources/font/bold/lazytown_bold.ptf
-			resources/font/default/lazytown.ptf
+			resources/fonts/bold/lazytown_bold.ptf
+			resources/fonts/default/lazytown.ptf
 			DESTINATION "/opt/Guardian/resources/fonts")
 
 	install(FILES
@@ -86,8 +86,8 @@ if (UNIX)
 			DESTINATION "/opt/Guardian/resources/models")
 
 	install(FILES
-			resources/gui.png
-			resources/icons.png
+			resources/gui/gui.png
+			resources/gui/icons.png
 			DESTINATION "/opt/Guardian/resources/gui")
 
 	SET(CPACK_GENERATOR "DEB")
@@ -103,8 +103,8 @@ elseif(WIN32)
 			DESTINATION ${CPACK_NSIS_INSTALL_ROOT}/${CPACK_NSIS_INSTALL_DIRECTORY}/logs)
 
 	install(FILES
-			resources/font/bold/lazytown_bold.ptf
-			resources/font/default/lazytown.ptf
+			resources/fonts/bold/lazytown_bold.ptf
+			resources/fonts/default/lazytown.ptf
 			DESTINATION ${CPACK_NSIS_INSTALL_ROOT}/${CPACK_NSIS_INSTALL_DIRECTORY}/fonts)
 
 	install(FILES
@@ -120,8 +120,8 @@ elseif(WIN32)
 			DESTINATION ${CPACK_NSIS_INSTALL_ROOT}/${CPACK_NSIS_INSTALL_DIRECTORY}/models)
 
 	install(FILES
-			resources/gui.png
-			resources/icons.png
+			resources/gui/gui.png
+			resources/gui/icons.png
 			DESTINATION ${CPACK_NSIS_INSTALL_ROOT}/${CPACK_NSIS_INSTALL_DIRECTORY}/gui)
 
 	SET(CPACK_GENERATOR "NSIS")
