@@ -33,7 +33,7 @@ void DebugRenderer::init() {
 	this->m_projectionViewMatrix = masterRenderer->getProjectionViewMatrix();
 
 	unsigned char bitMask;
-	this->m_mouseRayModel = cedar::ModelRegistry::loadBMFModel("intersection", "models/intersection.bmf", &bitMask);
+	this->m_mouseRayModel = cedar::ModelRegistry::loadBMFModel("intersection", "resources/models/intersection.bmf", &bitMask);
 	glBindVertexArray(this->m_mouseRayModel->getVertexArrayId());
 	glBindBuffer(GL_ARRAY_BUFFER, this->m_mouseRayModel->getVertexBufferId());
 	glVertexAttribPointer(0, 3, GL_FLOAT, false, sizeof(float) * 3, nullptr);

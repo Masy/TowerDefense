@@ -11,7 +11,7 @@
 #include "DebugScreen.hpp"
 
 DebugScreen::DebugScreen()
-	: Screen("debugScreen", 1)
+	: Screen("debugScreen", 0)
 {
 	this->m_fpsLabel = nullptr;
 	this->m_frameTimeLabel = nullptr;

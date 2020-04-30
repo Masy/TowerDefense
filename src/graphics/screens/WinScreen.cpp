@@ -10,7 +10,7 @@
 #include "TDMap.h"
 
 WinScreen::WinScreen()
-		: Screen("winScreen", 4)
+		: Screen("winScreen", 3)
 {
 	this->m_winLabel = nullptr;
 	this->m_playAgainButton = nullptr;

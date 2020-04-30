@@ -58,3 +58,75 @@ target_include_directories(Guardian PUBLIC
 		src/entity)
 
 target_link_libraries(Guardian cedar)
+
+if (UNIX)
+	install(TARGETS Guardian
+			COMPONENT linapp
+			RUNTIME DESTINATION "/opt/Guardian"
+			LIBRARY DESTINATION "/opt/Guardian"
+			DESTINATION "/opt/Guardian")
+
+	install(DIRECTORY
+			DESTINATION "/opt/Guardian/logs")
+
+	install(FILES
+			resources/font/bold/lazytown_bold.ptf
+			resources/font/default/lazytown.ptf
+			DESTINATION "/opt/Guardian/resources/fonts")
+
+	install(FILES
+			resources/models/enemy.bmf
+			resources/models/map1_noBuildZone.bmf
+			resources/models/map1_path.bmf
+			resources/models/map1_world.bmf
+			resources/models/towerCanon_level0.bmf
+			resources/models/towerCanon_level1.bmf
+			resources/models/towerCanon_level2.bmf
+			resources/models/towerCanon_level3.bmf
+			DESTINATION "/opt/Guardian/resources/models")
+
+	install(FILES
+			resources/gui.png
+			resources/icons.png
+			DESTINATION "/opt/Guardian/resources/gui")
+
+	SET(CPACK_GENERATOR "DEB")
+	SET(CPACK_DEBIAN_PACKAGE_MAINTAINER "KK")
+elseif(WIN32)
+	install(TARGETS Guardian
+			COMPONENT linapp
+			RUNTIME DESTINATION ${CPACK_NSIS_INSTALL_ROOT}/${CPACK_NSIS_INSTALL_DIRECTORY}/
+			LIBRARY DESTINATION ${CPACK_NSIS_INSTALL_ROOT}/${CPACK_NSIS_INSTALL_DIRECTORY}/
+			DESTINATION ${CPACK_NSIS_INSTALL_ROOT}/${CPACK_NSIS_INSTALL_DIRECTORY})
+
+	install(DIRECTORY
+			DESTINATION ${CPACK_NSIS_INSTALL_ROOT}/${CPACK_NSIS_INSTALL_DIRECTORY}/logs)
+
+	install(FILES
+			resources/font/bold/lazytown_bold.ptf
+			resources/font/default/lazytown.ptf
+			DESTINATION ${CPACK_NSIS_INSTALL_ROOT}/${CPACK_NSIS_INSTALL_DIRECTORY}/fonts)
+
+	install(FILES
+			resources/models/enemy.bmf
+			resources/models/intersection.bmf
+			resources/models/map1_noBuildZone.bmf
+			resources/models/map1_path.bmf
+			resources/models/map1_world.bmf
+			resources/models/towerCanon_level0.bmf
+			resources/models/towerCanon_level1.bmf
+			resources/models/towerCanon_level2.bmf
+			resources/models/towerCanon_level3.bmf
+			DESTINATION ${CPACK_NSIS_INSTALL_ROOT}/${CPACK_NSIS_INSTALL_DIRECTORY}/models)
+
+	install(FILES
+			resources/gui.png
+			resources/icons.png
+			DESTINATION ${CPACK_NSIS_INSTALL_ROOT}/${CPACK_NSIS_INSTALL_DIRECTORY}/gui)
+
+	SET(CPACK_GENERATOR "NSIS")
+	SET(CPACK_NSIS_DISPLAY_NAME "Guardian")
+	SET(CPACK_NSIS_PACKAGE_NAME "Guardian")
+	SET(CPACK_NSIS_)
+endif()
+INCLUDE(CPack)

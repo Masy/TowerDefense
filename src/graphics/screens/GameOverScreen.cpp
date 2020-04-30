@@ -10,7 +10,7 @@
 #include "TDMap.h"
 
 GameOverScreen::GameOverScreen()
-		: Screen("gameOverScreen", 3)
+		: Screen("gameOverScreen", 2)
 {
 	this->m_gameOverLabel = nullptr;
 	this->m_restartButton = nullptr;

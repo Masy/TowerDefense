@@ -115,4 +115,8 @@ html/
 Guardian
 Guardian.cbp
 workingdir/
+_CPack_Packages/
+CPackConfig.cmake
+CPackSourceConfig.cmake
+*.deb
 .idea/
