@@ -14,7 +14,7 @@
 #include "TDMap.h"
 
 /**
- * Renderer that renders the terrain.
+ * Class that renders the terrain, towers and entities.
  */
 class SceneRenderer : public cedar::Renderer
 {

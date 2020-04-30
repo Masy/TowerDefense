@@ -9,14 +9,34 @@
 #include "cedar/ShaderProgram.hpp"
 #include "cedar/Model.hpp"
 
+using namespace cedar;
+
+/**
+ * CLass for rendering debug information.
+ */
 class DebugRenderer : public cedar::Renderer
 {
 private:
-	const cedar::Matrix4f *m_projectionViewMatrix;
-	cedar::Matrix4f *m_transformationMatrix;
-	cedar::ShaderProgram *m_shader;
+	/**
+	 * A pointer to the projection matrix of the window.
+	 */
+	const Matrix4f *m_projectionViewMatrix;
+	/**
+	 * A pointer to a transformation matrix.
+	 */
+	Matrix4f *m_transformationMatrix;
+	/**
+	 * A pointer to the shader used to render the debug information.
+	 */
+	ShaderProgram *m_shader;
+	/**
+	 * A pointer to the array of uniform locations.
+	 */
 	int *m_uniformLocations;
-	cedar::Model *m_mouseRayModel;
+	/**
+	 * A pointer to the mouse ray model.
+	 */
+	Model *m_mouseRayModel;
 
 public:
 	/**
