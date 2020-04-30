@@ -317,9 +317,9 @@ TowerEntity *TDMap::getSelectedTower() const
 	return this->m_selectedTower;
 }
 
-void TDMap::setSelectedTower(TowerEntity *newGhostTower)
+void TDMap::setSelectedTower(TowerEntity *newSelectedTower)
 {
-	this->m_selectedTower = newGhostTower;
+	this->m_selectedTower = newSelectedTower;
 }
 
 unsigned int TDMap::getPathPointCount() const

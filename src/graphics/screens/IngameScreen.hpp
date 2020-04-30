@@ -183,8 +183,18 @@ public:
 	 */
 	void setSelectedTower(TowerEntity *selectedTower);
 
+	/**
+	 * Enables or disables the start wave button.
+	 *
+	 * @param enabled Whether the start wave button will be enabled or not.
+	 */
 	void setStartWaveButtonEnabled(bool enabled);
 
+	/**
+	 * Sets the current wave.
+	 *
+	 * @param currentWave The current wave.
+	 */
 	void setCurrentWave(unsigned int currentWave);
 };
 
