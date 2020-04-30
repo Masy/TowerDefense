@@ -13,7 +13,7 @@
 #include "IngameScreen.hpp"
 
 IngameScreen::IngameScreen()
-		: Screen("ingameScreen", 0)
+		: Screen("ingameScreen", 1)
 {
 	this->m_healthIcon = nullptr;
 	this->m_coinIcon = nullptr;

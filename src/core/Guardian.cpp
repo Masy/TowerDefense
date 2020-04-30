@@ -373,14 +373,13 @@ void Guardian::initWaves() const
 void Guardian::initCallback(MasterRenderer *masterRenderer)
 {
 	OpenGLThread::getInstance()->getWindow()->setTitle("Guardian");
-	std::cout << OpenGLThread::getInstance()->getWindow()->getTitle();
 	masterRenderer->addRenderer(SceneRenderer::getInstance());
 	masterRenderer->setClearColor(Vector4f(0x27 / 255.0f, 0x87 / 255.0f, 0xB8 / 255.0f, 1.0f));
 
-	FontRegistry::loadFont("lazytown3", "resources/fonts/lazytown.ptf", 3, 0, 255, CEDAR_RENDERING_SHARP);
+	FontRegistry::loadFont("lazytown2", "resources/fonts/lazytown.ptf", 2, 0, 255, CEDAR_RENDERING_SHARP);
 
+	FontRegistry::loadFont("lazytown_bold1", "resources/fonts/lazytown_bold.ptf", 1, 0, 255, CEDAR_RENDERING_SHARP);
 	FontRegistry::loadFont("lazytown_bold2", "resources/fonts/lazytown_bold.ptf", 2, 0, 255, CEDAR_RENDERING_SHARP);
-	FontRegistry::loadFont("lazytown_bold3", "resources/fonts/lazytown_bold.ptf", 3, 0, 255, CEDAR_RENDERING_SHARP);
 
 	std::shared_ptr<Texture> iconTexture = TextureRegistry::loadTexture("icons", "resources/gui/icons.png");
 	iconTexture->setParameteri(CEDAR_TEXTURE_MAG_FILTER, CEDAR_NEAREST);
@@ -395,25 +394,25 @@ void Guardian::initCallback(MasterRenderer *masterRenderer)
 	this->initWaves();
 	this->loadMap();
 
+	DebugScreen *debugScreen = new DebugScreen();
+	debugScreen->init(window->getWidth(), window->getHeight(), 1);
+
 	IngameScreen *ingameScreen = new IngameScreen();
-	ingameScreen->init(window->getWidth(), window->getHeight(), 3);
+	ingameScreen->init(window->getWidth(), window->getHeight(), 2);
 
 	GameOverScreen *gameOverScreen = new GameOverScreen();
-	gameOverScreen->init(window->getWidth(), window->getHeight(), 3);
+	gameOverScreen->init(window->getWidth(), window->getHeight(), 2);
 
 	WinScreen *winScreen = new WinScreen();
-	winScreen->init(window->getWidth(), window->getHeight(), 3);
-
-	DebugScreen *debugScreen = new DebugScreen();
-	debugScreen->init(window->getWidth(), window->getHeight(), 2);
+	winScreen->init(window->getWidth(), window->getHeight(), 2);
 
 	EscapeScreen *escapeScreen = new EscapeScreen();
-	escapeScreen->init(window->getWidth(), window->getHeight(), 3);
+	escapeScreen->init(window->getWidth(), window->getHeight(), 2);
 }
 
 void Guardian::preStart()
 {
-	config = new Config(1920, 1080, 60, -1, false, 90.0f);
+	config = new Config(1280, 720, 60, -1, false, 90.0f);
 
 	GuardianLogAppender *logAppender = new GuardianLogAppender();
 	LoggerFactory::setQueueLogAppender(logAppender);

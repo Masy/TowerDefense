@@ -10,7 +10,7 @@
 #include "EscapeScreen.hpp"
 
 EscapeScreen::EscapeScreen()
-		: Screen("escapeScreen", 2)
+		: Screen("escapeScreen", 4)
 {
 	this->m_optionButton = nullptr;
 	this->m_closeButton = nullptr;
